@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.temp')] class extends Component {
+new #[Layout('layouts.guest')] class extends Component {
     /**
      * Send an email verification notification to the user.
      */
