@@ -116,4 +116,8 @@ new #[Layout('layouts.temp')] class extends Component {
             <p><a class="font-bold" href="{{ route('password.request') }}">Forgot password?</a>.</p>
         @endif
     </div>
+    <div class='mt-3 text-center'>
+        <a href="/" wire:navigate><img src="{{ asset('assets/compiled/svg/ctn-google.svg') }}"
+                alt="continue with google"></a>
+    </div>
 </div>

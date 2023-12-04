@@ -79,8 +79,13 @@ new #[Layout('layouts.temp')] class extends Component {
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Sign Up</button>
     </form>
+
     <div class="text-center mt-5 text-lg fs-4">
         <p class='text-gray-600'>Already have an account? <a href="{{ route('login') }}" class="font-bold">Log
-                in</a>.</p>
-    </div>
+            in</a>.</p>
+        </div>
+        <div class='mt-3 text-center'>
+            <a href="/" wire:navigate><img src="{{ asset('assets/compiled/svg/ctn-google.svg') }}"
+                alt="continue with google"></a>
+        </div>
 </div>
