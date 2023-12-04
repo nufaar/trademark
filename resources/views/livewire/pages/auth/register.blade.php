@@ -82,10 +82,10 @@ new #[Layout('layouts.temp')] class extends Component {
 
     <div class="text-center mt-5 text-lg fs-4">
         <p class='text-gray-600'>Already have an account? <a href="{{ route('login') }}" class="font-bold">Log
-            in</a>.</p>
-        </div>
-        <div class='mt-3 text-center'>
-            <a href="/" wire:navigate><img src="{{ asset('assets/compiled/svg/ctn-google.svg') }}"
-                alt="continue with google"></a>
-        </div>
+                in</a>.</p>
+    </div>
+    <div class='mt-3 d-flex align-items-center justify-content-center'>
+        <a class="" href="{{ route('socialite', ['provider' => 'google']) }}"><img
+                src="{{ asset('assets/compiled/svg/ctn-google.svg') }}" alt="continue with google"></a>
+    </div>
 </div>

@@ -83,9 +83,14 @@ new #[Layout('layouts.temp')] class extends Component {
     <form wire:submit="login">
         <div class="form-group position-relative has-icon-left mb-4">
             <input wire:model="form.email" type="email"
-                class="form-control form-control-xl @error('form.email') is-invalid @enderror" placeholder="Email"
-                autocomplete="email">
+                class="form-control form-control-xl @error('form.email') is-invalid @enderror  @if ($errors->get('email')) is-invalid @endif"
+                placeholder="Email" autocomplete="email">
             <x-maz-input-error error='form.email' />
+            @if ($errors->get('email'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
             <div class="form-control-icon">
                 <i class="bi bi-person"></i>
             </div>
@@ -116,8 +121,8 @@ new #[Layout('layouts.temp')] class extends Component {
             <p><a class="font-bold" href="{{ route('password.request') }}">Forgot password?</a>.</p>
         @endif
     </div>
-    <div class='mt-3 text-center'>
-        <a href="/" wire:navigate><img src="{{ asset('assets/compiled/svg/ctn-google.svg') }}"
-                alt="continue with google"></a>
+    <div class='mt-3 d-flex align-items-center justify-content-center'>
+        <a class="" href="{{ route('socialite', ['provider' => 'google']) }}"><img
+                src="{{ asset('assets/compiled/svg/ctn-google.svg') }}" alt="continue with google"></a>
     </div>
 </div>
