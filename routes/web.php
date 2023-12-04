@@ -19,8 +19,24 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+
+Route::get('admin', function () {
+    return view('layouts.admin');
+})->middleware(['auth', 'verified', 'role:admin'])->name('test');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('profile', 'profile')
+        ->name('profile');
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::view('profile', 'users.profile')
+            ->name('profile');
+        Route::middleware(['verified'])->group(function () {
+            Route::get('/', function () {
+                return view('layouts.admin');
+            })->name('index');
+        });
+    });
+});
 
 require __DIR__ . '/auth.php';
