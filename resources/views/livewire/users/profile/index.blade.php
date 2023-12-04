@@ -7,16 +7,10 @@
                 </div>
                 <div class="card-body">
                     <form wire:submit="updateProfileInformation">
-                        <div class="form-group my-2">
-                            <label for="name" class="form-label">Name</label>
-                            <input wire:model="name" type="text" name="name" id="name" class="form-control"
-                                placeholder="Enter your current password" value="1L0V3Indonesia">
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="email" class="form-label">Email</label>
-                            <input wire:model="email" type="email" name="email" id="email" class="form-control"
-                                placeholder="Enter new password" value="">
-                        </div>
+                        <x-maz-form-input property="name" label="Name" type="text" name="name"
+                            placeholder="Enter your name" />
+                        <x-maz-form-input property="email" label="Email" type="email" name="email"
+                            placeholder="Enter email" />
                         @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&
                                 !auth()->user()->hasVerifiedEmail())
                             <div>
@@ -51,23 +45,12 @@
                 </div>
                 <div class="card-body">
                     <form wire:submit="updatePassword">
-                        <div class="form-group my-2">
-                            <label for="current_password" class="form-label">Current Password</label>
-                            <input wire:model="current_password" type="password" name="current_password"
-                                id="current_password" class="form-control" placeholder="Enter your current password"
-                                value="1L0V3Indonesia">
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="password" class="form-label">New Password</label>
-                            <input wire:model="password" type="password" name="password" id="password"
-                                class="form-control" placeholder="Enter new password" value="">
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input wire:model="password_confirmation" type="password" name="confirm_password"
-                                id="confirm_password" class="form-control" placeholder="Enter confirm password"
-                                value="">
-                        </div>
+                        <x-maz-form-input property="current_password" label="Current Password" type="password"
+                            name="current_password" placeholder="Enter your current password" />
+                        <x-maz-form-input property="password" label="Password" type="password" name="password"
+                            placeholder="Enter new password" />
+                        <x-maz-form-input property="password_confirmation" label="Confirm Password" type="password"
+                            name="confirm_password" placeholder="Enter confirm password" />
 
                         <div class="form-group my-2 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
