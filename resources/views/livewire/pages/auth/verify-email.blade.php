@@ -7,18 +7,14 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
-{
+new #[Layout('layouts.temp')] class extends Component {
     /**
      * Send an email verification notification to the user.
      */
     public function sendVerification(): void
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirect(
-                session('url.intended', RouteServiceProvider::HOME),
-                navigate: true
-            );
+            $this->redirect(session('url.intended', RouteServiceProvider::HOME), navigate: true);
 
             return;
         }
@@ -39,7 +35,7 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
+{{-- <div>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
     </div>
@@ -55,8 +51,27 @@ new #[Layout('layouts.guest')] class extends Component
             {{ __('Resend Verification Email') }}
         </x-primary-button>
 
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+        <button wire:click="logout" type="submit"
+            class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
             {{ __('Log Out') }}
         </button>
     </div>
+</div> --}}
+
+<div>
+    <h1 class="auth-title">Verify Your Emaild</h1>
+    <p class="auth-subtitle mb-5">
+        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    </p>
+
+    @if (session('status') == 'verification-link-sent')
+        <div class="mb-4">
+            <div class="alert alert-success"><i class="bi bi-check-circle"></i>
+                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+            </div>
+        </div>
+    @endif
+
+    <button wire:click="sendVerification"
+        class="btn btn-primary btn-block btn-lg shadow-lg mt-5">{{ __('Resend Verification Email') }}</button>
 </div>

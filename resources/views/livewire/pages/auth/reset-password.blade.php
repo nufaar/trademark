@@ -109,22 +109,28 @@ new #[Layout('layouts.temp')] class extends Component {
 
     <form wire:submit="resetPassword">
         <div class="form-group position-relative has-icon-left mb-4">
-            <input wire:model="email" type="text" class="form-control form-control-xl" placeholder="Email"
+            <input wire:model="email" type="text"
+                class="form-control form-control-xl @error('email') is-invalid @enderror" placeholder="Email"
                 autocomplete="email">
+            <x-maz-input-error error='email' />
             <div class="form-control-icon">
                 <i class="bi bi-envelope"></i>
             </div>
         </div>
         <div class="form-group position-relative has-icon-left mb-4">
-            <input wire:model="password" type="password" class="form-control form-control-xl" placeholder="Password"
+            <input wire:model="password" type="password"
+                class="form-control form-control-xl @error('password') is-invalid @enderror" placeholder="Password"
                 autocomplete="new-password">
+            <x-maz-input-error error='password' />
             <div class="form-control-icon">
                 <i class="bi bi-shield-lock"></i>
             </div>
         </div>
         <div class="form-group position-relative has-icon-left mb-4">
-            <input wire:model="password_confirmation" type="password" class="form-control form-control-xl"
+            <input wire:model="password_confirmation" type="password"
+                class="form-control form-control-xl @error('password_confirmation') is-invalid @enderror"
                 placeholder="Confirm Password" autocomplete="new-password">
+            <x-maz-input-error error='password_confirmation' />
             <div class="form-control-icon">
                 <i class="bi bi-shield-lock"></i>
             </div>

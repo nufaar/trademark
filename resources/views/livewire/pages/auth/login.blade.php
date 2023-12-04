@@ -77,21 +77,25 @@ new #[Layout('layouts.temp')] class extends Component {
     <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
 
     @if (session('status'))
-        {{ session('status') }}
+        <div class="alert alert-success"><i class="bi bi-check-circle"></i> {{ session('status') }}</div>
     @endif
 
     <form wire:submit="login">
         <div class="form-group position-relative has-icon-left mb-4">
-            <input wire:model="form.email" type="email" class="form-control form-control-xl" placeholder="Email"
+            <input wire:model="form.email" type="email"
+                class="form-control form-control-xl @error('form.email') is-invalid @enderror" placeholder="Email"
                 autocomplete="email">
+            <x-maz-input-error error='form.email' />
             <div class="form-control-icon">
                 <i class="bi bi-person"></i>
             </div>
         </div>
 
         <div class="form-group position-relative has-icon-left mb-4">
-            <input wire:model="form.password" type="password" class="form-control form-control-xl"
-                placeholder="Password" autocomplete="password">
+            <input wire:model="form.password" type="password"
+                class="form-control form-control-xl @error('form.password') is-invalid @enderror" placeholder="Password"
+                autocomplete="password">
+            <x-maz-input-error error='form.password' />
             <div class="form-control-icon">
                 <i class="bi bi-shield-lock"></i>
             </div>
