@@ -10,6 +10,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use App\Livewire\Actions\Logout;
+use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 use Livewire\Component;
 
 class Index extends Component
@@ -56,10 +58,17 @@ class Index extends Component
     public function updatePassword(): void
     {
         try {
-            $validated = $this->validate([
-                'current_password' => ['string', 'current_password'],
-                'password' => ['required', 'string', Password::defaults(), 'confirmed'],
-            ]);
+            if (auth()->user()->socialAccounts->isNotEmpty() && auth()->user()->password === null) {
+                $validated = $this->validate([
+                    'current_password' => ['current_password', 'string'],
+                    'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+                ]);
+            } else {
+                $validated = $this->validate([
+                    'current_password' => ['required', 'current_password', 'string'],
+                    'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+                ]);
+            }
         } catch (ValidationException $e) {
             $this->reset('current_password', 'password', 'password_confirmation');
 
@@ -97,9 +106,16 @@ class Index extends Component
 
     public function deleteUser(Logout $logout): void
     {
-        $this->validate([
-            'password_delete' => ['required', 'string', 'current_password'],
-        ]);
+        if (auth()->user()->socialAccounts->isNotEmpty() && auth()->user()->password === null) {
+            $rules = [
+                'password_delete' => ['string', 'current_password'],
+            ];
+        } else {
+            $rules = [
+                'password_delete' => ['required', 'string', 'current_password'],
+            ];
+        }
+        $this->validate($rules);
 
         tap(Auth::user(), $logout(...))->delete();
 

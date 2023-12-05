@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,7 @@ Route::get('admin', function () {
 })->middleware(['auth', 'verified', 'role:admin'])->name('test');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::view('profile', 'profile')
         ->name('profile');
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
@@ -33,8 +34,12 @@ Route::middleware(['auth'])->group(function () {
             ->name('profile');
         Route::middleware(['verified'])->group(function () {
             Route::get('/', function () {
-                return view('layouts.admin');
+                return view('users.index');
             })->name('index');
+            Route::get('create', function () {
+                return view('users.create');
+            })->name('create');
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit');
         });
     });
 });

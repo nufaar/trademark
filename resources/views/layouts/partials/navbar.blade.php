@@ -21,7 +21,7 @@
                         </div>
                         <div class="user-img d-flex align-items-center">
                             <div class="avatar avatar-md">
-                                <img src="{{ asset('assets/compiled/jpg/1.jpg') }}">
+                                <img src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->name }}">
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@
                         <x-maz-form-input property="name" label="Name" type="text" name="name"
                             placeholder="Enter your name" />
                         <x-maz-form-input property="email" label="Email" type="email" name="email"
-                            placeholder="Enter email" />
+                            placeholder="Enter email" disabled="{{ auth()->user()->socialAccounts->isNotEmpty() }}" />
                         @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&
                                 !auth()->user()->hasVerifiedEmail())
                             <div>
@@ -52,7 +52,8 @@
                         <x-maz-form-input property="password_confirmation" label="Confirm Password" type="password"
                             name="confirm_password" placeholder="Enter confirm password" />
 
-                        <div class="form-group my-2 d-flex justify-content-end">
+                        <div class="form-group my-2 d-flex justify-content-end align-items-center">
+                            <x-action-message class="me-3" on="password-updated"></x-action-message>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
@@ -67,10 +68,9 @@
                 </div>
                 <div class="card-body">
                     <form wire:submit="deleteUser">
-                        <p>Your account will be permanently deleted and cannot be restored, click "Touch me!" and enter
-                            your password to continue</p>
-                        <input wire:model="password_delete" type="password" class="form-control"
-                            placeholder="Enter password" value="">
+                        <p>Your account will be permanently deleted and cannot be restored</p>
+                        <input wire:model="password_delete" @if (auth()->user()->socialAccounts->isNotEmpty()) disabled @endif
+                            type="password" class="form-control" placeholder="Enter password" value="">
                         <div class="form-check mt-3">
                             <div class="checkbox">
                                 <input type="checkbox" id="iaggree" class="form-check-input">

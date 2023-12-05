@@ -4,7 +4,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ asset('assets/compiled/svg/logo.svg') }}" alt="Logo"
+                    <a href="{{ route('dashboard') }}"><img src="{{ asset('assets/compiled/svg/logo.svg') }}" alt="Logo"
                             srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
@@ -58,7 +58,7 @@
                 <li class="sidebar-title">Administrator</li>
 
                 <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
-                    active="{{ Route::is(['user.profile', 'user.index']) }}" />
+                    active="{{ Route::is(['user.*']) }}" />
             </ul>
         </div>
     </div>
