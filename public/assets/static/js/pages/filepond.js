@@ -33,10 +33,14 @@ FilePond.create(document.querySelector(".multiple-files-filepond"), {
 FilePond.create(document.querySelector(".with-validation-filepond"), {
   credits: null,
   allowImagePreview: false,
-  allowMultiple: true,
+  allowMultiple: false,
   allowFileEncode: false,
   required: true,
-  acceptedFileTypes: ["image/png"],
+    labelFileTypeNotAllowed: 'File harus berupa gambar',
+    fileValidateTypeLabelExpectedTypes: 'Format file yang diperbolehkan: {allButLastType} atau {lastType}',
+    labelMaxFileSizeExceeded: 'Ukuran file terlalu besar',
+    labelMaxFileSize: 'Ukuran file maksimum adalah {filesize}',
+    acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg"],
   fileValidateTypeDetectType: (source, type) =>
     new Promise((resolve, reject) => {
       // Do custom type detection here and return with promise

@@ -1,4 +1,4 @@
-@props(['name', 'label', 'placeholder', 'type' => 'text', 'value' => '', 'property', 'disabled' => false])
+@props(['name', 'label', 'placeholder' => '', 'type' => 'text', 'value' => '', 'property', 'disabled' => false])
 
 <div class="form-group my-2">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,12 +29,12 @@ Route::get('admin', function () {
 
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
-    Route::view('profile', 'profile')
-        ->name('profile');
-    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-        Route::view('profile', 'users.profile')
-            ->name('profile');
-        Route::middleware(['verified'])->group(function () {
+    Route::view('user/profile', 'users.profile')
+        ->name('user.profile');
+    Route::middleware(['verified'])->group(function () {
+
+        // route user
+        Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             Route::get('/', function () {
                 return view('users.index');
             })->name('index');
@@ -40,6 +42,17 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
                 return view('users.create');
             })->name('create');
             Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit');
+        });
+
+        // route trademark
+        Route::group(['prefix' => 'trademark', 'as' => 'trademark.'], function () {
+            Route::get('/', function () {
+                return view('trademarks.index');
+            })->name('index');
+            Route::get('create', function () {
+                return view('trademarks.create');
+            })->name('create');
+            Route::get('{trademark}/edit', [TrademarkController::class, 'edit'])->name('edit');
         });
     });
 });

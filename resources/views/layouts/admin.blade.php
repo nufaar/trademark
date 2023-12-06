@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/table-datatable.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
+
+    {{ $head ?? '' }}
 </head>
 
 <body>
@@ -72,7 +74,7 @@
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script>
 
-
+    {{ $script ?? '' }}
 </body>
 
 </html>
