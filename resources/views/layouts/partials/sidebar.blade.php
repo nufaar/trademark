@@ -57,8 +57,10 @@
 
                 <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
                                     active="{{ Route::is(['user.*']) }}"/>
-                <x-maz-sidebar-item title="User" link="{{ route('artikel.index') }}" icon="bi bi-person-fill"
-                                    active="{{ Route::is(['artikel.*']) }}"/>
+                <x-maz-sidebar-item title="Permission" link="{{ route('permission.index') }}" icon="bi bi-person-fill"
+                                    active="{{ Route::is(['permission.*']) }}"/>
+                <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}" icon="bi bi-person-fill"
+                                    active="{{ Route::is(['article.*']) }}"/>
             </ul>
         </div>
     </div>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
@@ -26,10 +28,10 @@ Route::view('dashboard', 'dashboard')
 
 Route::get('admin', function () {
     return view('layouts.admin');
-})->middleware(['auth', 'verified', 'role:admin'])->name('test');
+})->middleware(['auth', 'verified'])->name('test');
 
 
-Route::middleware(['auth', 'auth.session'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::view('user/profile', 'users.profile')
         ->name('user.profile');
     Route::middleware(['verified'])->group(function () {
@@ -38,11 +40,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             Route::get('/', function () {
                 return view('users.index');
-            })->name('index');
+            })->name('index')->middleware('can:create user');
             Route::get('create', function () {
                 return view('users.create');
-            })->name('create');
-            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit');
+            })->name('create')->middleware('can:create user');
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit')->middleware('can:edit user');
         });
 
         // route trademark
@@ -58,16 +60,39 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         });
 
         // route artikel
-        Route::group(['prefix' => 'artikel', 'as' => 'artikel.'], function () {
+        Route::group(['prefix' => 'artikel', 'as' => 'article.'], function () {
             Route::get('/', function () {
-                return view('artikels.index');
+                return view('articles.index');
             })->name('index');
             Route::get('create', function () {
-                return view('artikels.create');
+                return view('articles.create');
             })->name('create');
-            Route::get('{artikel}/edit', [ArticleController::class, 'edit'])->name('edit');
-            Route::get('{artikel}', [ArticleController::class, 'show'])->name('show');
+            Route::get('{article}/edit', [ArticleController::class, 'edit'])->name('edit');
+            Route::get('{article:slug}', [ArticleController::class, 'show'])->name('show');
         });
+
+        // route permission
+        Route::group(['prefix' => 'permission', 'as' => 'permission.'], function () {
+            Route::get('/', function () {
+                return view('permissions.index');
+            })->name('index');
+            Route::get('create', function () {
+                return view('permissions.create');
+            })->name('create');
+            Route::get('{permission}/edit', [PermissionController::class, 'edit'])->name('edit');
+        });
+
+        // route role
+        Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
+            Route::get('/', function () {
+                return view('roles.index');
+            })->name('index');
+            Route::get('create', function () {
+                return view('roles.create');
+            })->name('create');
+            Route::get('{role}/edit', [RoleController::class, 'edit'])->name('edit');
+        });
+
     });
 });
 

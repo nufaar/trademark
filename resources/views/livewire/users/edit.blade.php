@@ -3,12 +3,14 @@
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Volt\Component;
+use Spatie\Permission\Models\Role;
 
 new class extends Component {
     public $name;
     public $email;
     public $password;
     public $password_confirmation;
+    public $role;
 
     public User $user;
 
@@ -16,6 +18,14 @@ new class extends Component {
     {
         $this->name = $this->user->name;
         $this->email = $this->user->email;
+        $this->role = $this->user->roles->first()->name;
+    }
+
+    public function with()
+    {
+        return [
+            'roles' => Role::all()->pluck('name'),
+        ];
     }
 
     public function edit()
@@ -30,6 +40,8 @@ new class extends Component {
             'email' => $this->email,
             'email_verified_at' => now(),
         ]);
+
+        $this->user->syncRoles($this->role);
 
         $this->dispatch('user-updated');
     }
@@ -71,6 +83,15 @@ new class extends Component {
                                       placeholder="Enter name"/>
                     <x-maz-form-input property="email" label="Email" type="email" name="email"
                                       placeholder="Enter email"/>
+                    <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <select wire:model="role" class="form-select" id="role">
+                            <option>-- Select Role --</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role }}">{{ $role }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group my-2 d-flex justify-content-end align-items-center">
                         <x-action-message class="me-3" on="user-updated"></x-action-message>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
