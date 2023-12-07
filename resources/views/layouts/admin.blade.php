@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
+    <script data-navigate-once src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
         @include('layouts.partials.sidebar')
         <div id="main" class='layout-navbar navbar-fixed'>
@@ -66,15 +66,15 @@
             </footer>
         </div>
     </div>
-    <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
-    <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
+    <script data-navigate-once src="{{ asset('assets/static/js/components/dark.js') }}"></script>
+    <script data-navigate-once src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script data-navigate-once src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
     {{--datatables--}}
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script>
-
     {{ $script ?? '' }}
+
 </body>
 
 </html>

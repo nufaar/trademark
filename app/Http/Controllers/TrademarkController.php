@@ -12,4 +12,9 @@ class TrademarkController extends Controller
         return view('trademarks.edit', ['trademark' => $trademark]);
     }
 
+    public function show(Trademark $trademark)
+    {
+        return view('trademarks.show', ['trademark' => $trademark]);
+    }
+
 }

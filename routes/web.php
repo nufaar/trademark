@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
@@ -53,6 +54,19 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
                 return view('trademarks.create');
             })->name('create');
             Route::get('{trademark}/edit', [TrademarkController::class, 'edit'])->name('edit');
+            Route::get('{trademark}/show', [TrademarkController::class, 'show'])->name('show');
+        });
+
+        // route artikel
+        Route::group(['prefix' => 'artikel', 'as' => 'artikel.'], function () {
+            Route::get('/', function () {
+                return view('artikels.index');
+            })->name('index');
+            Route::get('create', function () {
+                return view('artikels.create');
+            })->name('create');
+            Route::get('{artikel}/edit', [ArticleController::class, 'edit'])->name('edit');
+            Route::get('{artikel}', [ArticleController::class, 'show'])->name('show');
         });
     });
 });

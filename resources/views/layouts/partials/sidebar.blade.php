@@ -57,6 +57,8 @@
 
                 <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
                                     active="{{ Route::is(['user.*']) }}"/>
+                <x-maz-sidebar-item title="User" link="{{ route('artikel.index') }}" icon="bi bi-person-fill"
+                                    active="{{ Route::is(['artikel.*']) }}"/>
             </ul>
         </div>
     </div>
