@@ -9,6 +9,6 @@
         </li>
     </x-slot:menu>
 
-    <livewire:role.index />
+    <livewire:roles.index />
 
 </x-admin-layout>

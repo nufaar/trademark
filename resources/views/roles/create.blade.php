@@ -9,6 +9,6 @@
         </li>
     </x-slot:menu>
 
-    <livewire:role.create />
+    <livewire:roles.create />
 
 </x-admin-layout>

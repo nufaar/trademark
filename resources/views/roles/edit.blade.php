@@ -9,6 +9,6 @@
         </li>
     </x-slot:menu>
 
-    <livewire:role.edit :role="$role" />
+    <livewire:roles.edit :role="$role" />
 
 </x-admin-layout>
