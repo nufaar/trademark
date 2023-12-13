@@ -21,6 +21,20 @@ new class extends Component {
     #[Validate('required|image|max:2048')]
     public $signature;
 
+    public $trademarks = [];
+
+    public function updatedName()
+    {
+        $url = "https://pdki-indonesia.dgip.go.id/api/search?keyword=" . $this->name . "&page=1&showFilter=true&type=trademark";
+        $pdki_sign = "PDKI/735032dcbdf964d2c4426c1c2442e1650017fab3c979c42bbb390effc39425041625f60d46edfcd88363d4473bda49da967333c6a21ac6da689fc4321d5ed572";
+
+        $data = Http::withHeaders([
+            'Pdki-Signature' => $pdki_sign
+        ])->get($url);
+
+
+        $this->trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
+    }
 
     public function store()
     {
@@ -56,8 +70,30 @@ new class extends Component {
             </div>
             <div class="card-body">
                 <form wire:submit="store">
-                    <x-maz-form-input property="name" label="Nama Usaha" type="text" name="name"
-                                      placeholder="Masukan nama usaha"/>
+                    {{--                    <x-maz-form-input property="name" label="Nama Usaha" type="text" name="name"--}}
+                    {{--                                      placeholder="Masukan nama usaha"/>--}}
+
+                    <div class="form-group my-2">
+                        <label for="name" class="form-label">Nama merek</label>
+                        <input wire:model.blur="name" type="text"
+                               class="form-control @error('name') is-invalid @enderror"
+                               placeholder="Masukan nama merek">
+                        <x-maz-input-error error="name"/>
+                    </div>
+                    @if($trademarks)
+                        <div class="mb-2">
+                            <div class="text-danger">Merek sudah diambil:</div>
+                            <ul>
+                            @foreach($trademarks as $trademark)
+                                <div class="d-block text-danger mb-2">
+                                    <div>{{ $trademark['_source']['nama_merek'] }}</div>
+                                    <span class="d-block text-sm">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
+                                </div>
+                            @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 
                     <div class="form-group my-2">
                         <label for="address" class="form-label">Alamat Usaha</label>
@@ -70,12 +106,13 @@ new class extends Component {
                     <x-maz-form-input property="owner" label="Pemilik Usaha" type="text" name="owner"
                                       placeholder="Masukan nama pemilik usaha"/>
 
-                    <x-maz-form-input property="logo" label="Logo Usaha" type="file" name="logo" />
+                    <x-maz-form-input property="logo" label="Logo Usaha" type="file" name="logo"/>
                     <div wire:loading wire:target="logo">Uploading...</div>
 
-                    <x-maz-form-input property="certificate" label="Surat Keterangan UMK" type="file" name="certificate" />
+                    <x-maz-form-input property="certificate" label="Surat Keterangan UMK" type="file"
+                                      name="certificate"/>
 
-                    <x-maz-form-input property="signature" label="Tanda Tangan" type="file" name="signature" />
+                    <x-maz-form-input property="signature" label="Tanda Tangan" type="file" name="signature"/>
 
                     <div class="form-group my-2 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">Tambah</button>

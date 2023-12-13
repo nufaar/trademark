@@ -18,6 +18,8 @@ new #[Layout('layouts.guest')] class extends Component {
 
         $this->form->authenticate();
 
+        auth()->user()->loginLogs()->create();
+
         Session::regenerate();
 
         $this->redirect(session('url.intended', RouteServiceProvider::HOME), navigate: true);

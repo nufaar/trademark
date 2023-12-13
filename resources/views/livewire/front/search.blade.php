@@ -8,12 +8,16 @@ new class extends Component {
 
     public function getTrademark()
     {
-        $url = "https://pdki-indonesia-api.dgip.go.id/api/trademark/search2?keyword=". $this->keyword ."&page=1&showFilter=true&type=trademark&order_state=asc";
+        $url = "https://pdki-indonesia.dgip.go.id/api/search?keyword=". $this->keyword ."&page=1&showFilter=true&type=trademark";
         $key = private_key($this->keyword);
+        $pdki_sign = "PDKI/735032dcbdf964d2c4426c1c2442e1650017fab3c979c42bbb390effc39425041625f60d46edfcd88363d4473bda49da967333c6a21ac6da689fc4321d5ed572";
 
-        $data = Http::post($url, [
-            'key' => $key
-        ]);
+//        $data = Http::post($url, [
+//            'key' => $key
+//        ]);
+        $data = Http::withHeaders([
+            'Pdki-Signature' => $pdki_sign
+        ])->get($url);
 
         return $data->json();
     }
@@ -26,6 +30,14 @@ new class extends Component {
 }; ?>
 
 <div>
+{{--    <div class="pt-20"></div>--}}
+{{--    <div class="columns-2">--}}
+{{--        <p>Well, let me tell you something, ...</p>--}}
+{{--        <p class="">Sure, go ahead, laugh...</p>--}}
+{{--        <p>Maybe we can live without...</p>--}}
+{{--        <p>Look. If you think this is...</p>--}}
+{{--    </div>--}}
+
     <div class="flex flex-col w-screen h-screen items-center pt-24">
         <div class="flex gap-4 w-full justify-center">
             <input wire:model="keyword" type="text" placeholder="Type here" class="input w-full max-w-xs"/>
@@ -57,5 +69,6 @@ new class extends Component {
                 </div>
             </div>
         </div>
+
     </div>
 </div>

@@ -32,6 +32,10 @@ new #[Layout('layouts.guest')] class extends Component {
 
         Auth::login($user);
 
+        $user->loginLogs()->create();
+
+        $user->assignRole('pemohon');
+
         $this->redirect(RouteServiceProvider::HOME, navigate: true);
     }
 }; ?>

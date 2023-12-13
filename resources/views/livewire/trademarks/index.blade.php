@@ -9,7 +9,7 @@ new class extends Component {
 
     public $comment = '';
     public $status;
-    public $trademark_id;
+    public $trademark_id = 0;
 
     public Trademark $trademark;
 
@@ -59,7 +59,7 @@ new class extends Component {
             'comment' => $this->comment,
         ]);
 
-        return $this->redirect(route('trademark.index'));
+        return $this->redirect(route('trademark.index'), navigate: true);
     }
 
     public function verifApproved($id)
@@ -71,7 +71,7 @@ new class extends Component {
             'comment' => "Permohonan disetujui",
         ]);
 
-        return $this->redirect(route('trademark.index'));
+        return $this->redirect(route('trademark.index'), navigate: true);
     }
 }; ?>
 
@@ -186,7 +186,6 @@ new class extends Component {
                 </div>
                 <form wire:submit="verif">
                     <div class="modal-body">
-
                         <textarea wire:model="comment" name="comment" id="comment"
                                   class="form-control @error('comment') is-invalid @enderror"
                                   placeholder="Tuliskan alasan" rows="3" required></textarea>
