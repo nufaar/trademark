@@ -8,7 +8,7 @@ use Livewire\WithFileUploads;
 new class extends Component {
     use WithFileUploads;
 
-    #[Validate('required|string|max:255')]
+    #[Validate('required|string|max:255|unique:trademarks,name')]
     public $name;
     #[Validate('required|string')]
     public $address;
@@ -34,11 +34,23 @@ new class extends Component {
 
 
         $this->trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
+
+
+        if(empty($this->trademarks)) {
+            $this->validateOnly('name');
+        } else {
+            $this->addError('name', 'Merek sudah diambil.');
+        }
     }
 
     public function store()
     {
         $this->validate();
+
+        if ($this->trademarks) {
+            $this->addError('name', 'Merek sudah diambil.');
+            return;
+        }
 
         $this->logo->store('logos', 'public');
         $this->certificate->store('certificates', 'public');
@@ -81,13 +93,12 @@ new class extends Component {
                         <x-maz-input-error error="name"/>
                     </div>
                     @if($trademarks)
-                        <div class="mb-2">
-                            <div class="text-danger">Merek sudah diambil:</div>
+                        <div class="mb-2 text-sm">
                             <ul>
                             @foreach($trademarks as $trademark)
                                 <div class="d-block text-danger mb-2">
                                     <div>{{ $trademark['_source']['nama_merek'] }}</div>
-                                    <span class="d-block text-sm">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
+                                    <span class="d-block">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
                                 </div>
                             @endforeach
                             </ul>

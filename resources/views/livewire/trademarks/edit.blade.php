@@ -10,23 +10,20 @@ new class extends Component {
 
     public Trademark $trademark;
 
-    #[Validate('required|string|max:255')]
     public $name;
-    #[Validate('required|string')]
     public $address;
-    #[Validate('required|string|max:255')]
     public $owner;
-    #[Validate('max:2048')]
     public $logo;
-    #[Validate('max:5120')]
     public $certificate;
-    #[Validate('max:2048')]
     public $signature;
 
 //    old image
     public $oldLogo;
     public $oldCertificate;
     public $oldSignature;
+
+//    from api
+    public $trademarks = [];
 
     public function mount(Trademark $trademark)
     {
@@ -39,9 +36,41 @@ new class extends Component {
         $this->oldSignature = $trademark->signature;
     }
 
+    public function updatedName()
+    {
+        $url = "https://pdki-indonesia.dgip.go.id/api/search?keyword=" . $this->name . "&page=1&showFilter=true&type=trademark";
+        $pdki_sign = "PDKI/735032dcbdf964d2c4426c1c2442e1650017fab3c979c42bbb390effc39425041625f60d46edfcd88363d4473bda49da967333c6a21ac6da689fc4321d5ed572";
+
+        $data = Http::withHeaders([
+            'Pdki-Signature' => $pdki_sign
+        ])->get($url);
+
+        $this->trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
+
+        if(empty($this->trademarks)) {
+            $this->validateOnly('name');
+        } else {
+            $this->addError('name', 'Merek sudah diambil.');
+        }
+    }
+
     public function edit()
     {
-        $this->validate();
+        $this->validate(
+            [
+                'name' => 'required|string|max:255|unique:trademarks,name,' . $this->trademark->id,
+                'address' => 'required|string',
+                'owner' => 'required|string|max:255',
+                'logo' => 'nullable|image|max:2048',
+                'certificate' => 'nullable|max:5120',
+                'signature' => 'nullable|image|max:2048',
+            ]
+        );
+
+        if ($this->trademarks) {
+            $this->addError('name', 'Merek sudah diambil.');
+            return;
+        }
 
         if ($this->logo) {
             $this->logo->store('logos', 'public');
@@ -89,8 +118,27 @@ new class extends Component {
             </div>
             <div class="card-body">
                 <form wire:submit="edit">
-                    <x-maz-form-input property="name" label="Nama Usaha" type="text" name="name"
-                                      placeholder="Masukan nama usaha"/>
+{{--                    <x-maz-form-input property="name" label="Nama Usaha" type="text" name="name"--}}
+{{--                                      placeholder="Masukan nama usaha"/>--}}
+                    <div class="form-group my-2">
+                        <label for="name" class="form-label">Nama merek</label>
+                        <input wire:model.blur="name" type="text"
+                               class="form-control @error('name') is-invalid @enderror"
+                               placeholder="Masukan nama merek">
+                        <x-maz-input-error error="name"/>
+                    </div>
+                    @if($trademarks)
+                        <div class="mb-2 text-sm">
+                            <ul>
+                                @foreach($trademarks as $trademark)
+                                    <div class="d-block text-danger mb-2">
+                                        <div>{{ $trademark['_source']['nama_merek'] }}</div>
+                                        <span class="d-block">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <div class="form-group my-2">
                         <label for="address" class="form-label">Alamat Usaha</label>
