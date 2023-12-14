@@ -1,17 +1,31 @@
 <?php
 
 use App\Models\Trademark;
+use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new class extends Component {
+new
+#[Layout('layouts.admin')]
+class extends Component {
     public Trademark $trademark;
 
 }; ?>
 
 <div>
+    <x-slot:title>
+        Detail Permohonan
+    </x-slot:title>
+
+    <x-slot:menu>
+        <li class="breadcrumb-item"><a href="{{ route('trademark.index') }}">Trademark</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detail Trademark
+        </li>
+    </x-slot:menu>
+
     <div class="row">
         <div class="mb-3">
-            <a href="{{ route('trademark.index') }}" class="h6 icon"><i class="bi bi-arrow-left"></i> Kembali ke daftar permohonan</a>
+            <a href="{{ route('trademark.index') }}" class="h6 icon"><i class="bi bi-arrow-left"></i> Kembali ke daftar
+                permohonan</a>
         </div>
         <div class="col-12 col-lg-4">
             <div class="card">

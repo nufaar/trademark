@@ -1,11 +1,14 @@
 <?php
 
 use App\Models\Trademark;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Volt\Component;
 
-new class extends Component {
+new
+#[Layout('layouts.admin')]
+class extends Component {
 
     public $comment = '';
     public $status;
@@ -76,12 +79,22 @@ new class extends Component {
 }; ?>
 
 <div>
+    <x-slot:title>
+        Daftar Permohonan Merek
+    </x-slot:title>
+
+    <x-slot:menu>
+        <li class="breadcrumb-item"><a href="{{ route('trademark.index') }}">Permohonan</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Daftar Permohonan
+        </li>
+    </x-slot:menu>
+
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">
-                Daftar Permohonan Merek
+
             </h5>
-            <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left"><i
+            <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
                     class="bi bi-person-add"></i>
                 Tambah Permohonan</a>
         </div>

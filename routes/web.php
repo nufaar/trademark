@@ -7,6 +7,7 @@ use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,14 +50,10 @@ Route::middleware(['auth'])->group(function () {
 
         // route trademark
         Route::group(['prefix' => 'trademark', 'as' => 'trademark.'], function () {
-            Route::get('/', function () {
-                return view('trademarks.index');
-            })->name('index');
-            Route::get('create', function () {
-                return view('trademarks.create');
-            })->name('create');
-            Route::get('{trademark}/edit', [TrademarkController::class, 'edit'])->name('edit');
-            Route::get('{trademark}/show', [TrademarkController::class, 'show'])->name('show');
+            Volt::route('/', 'trademarks.index')->name('index');
+            Volt::route('create', 'trademarks.create')->name('create');
+            Volt::route('{trademark}/edit', 'trademarks.edit')->name('edit');
+            Volt::route('{trademark}/show', 'trademarks.show')->name('show');
         });
 
         // route artikel

@@ -1,11 +1,14 @@
 <?php
 
 use App\Models\Trademark;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
 
-new class extends Component {
+new
+#[Layout('layouts.admin')]
+class extends Component {
     use WithFileUploads;
 
     #[Validate('required|string|max:255|unique:trademarks,name')]
@@ -36,7 +39,7 @@ new class extends Component {
         $this->trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
 
 
-        if(empty($this->trademarks)) {
+        if (empty($this->trademarks)) {
             $this->validateOnly('name');
         } else {
             $this->addError('name', 'Merek sudah diambil.');
@@ -75,18 +78,23 @@ new class extends Component {
 }; ?>
 
 <div>
+    <x-slot:title>
+        Tambah Permohonan Merek
+    </x-slot:title>
+
+    <x-slot:menu>
+        <li class="breadcrumb-item"><a href="{{ route('trademark.index') }}" wire:navigate>Permohonan</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tambah Permohonan
+        </li>
+    </x-slot:menu>
+
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Tambahkan Permohonan</h5>
-            </div>
             <div class="card-body">
                 <form wire:submit="store">
-                    {{--                    <x-maz-form-input property="name" label="Nama Usaha" type="text" name="name"--}}
-                    {{--                                      placeholder="Masukan nama usaha"/>--}}
 
                     <div class="form-group my-2">
-                        <label for="name" class="form-label">Nama merek</label>
+                        <label for="name" class="form-label">Nama Merek</label>
                         <input wire:model.blur="name" type="text"
                                class="form-control @error('name') is-invalid @enderror"
                                placeholder="Masukan nama merek">
@@ -95,30 +103,30 @@ new class extends Component {
                     @if($trademarks)
                         <div class="mb-2 text-sm">
                             <ul>
-                            @foreach($trademarks as $trademark)
-                                <div class="d-block text-danger mb-2">
-                                    <div>{{ $trademark['_source']['nama_merek'] }}</div>
-                                    <span class="d-block">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
-                                </div>
-                            @endforeach
+                                @foreach($trademarks as $trademark)
+                                    <div class="d-block text-danger mb-2">
+                                        <div>{{ $trademark['_source']['nama_merek'] }}</div>
+                                        <span
+                                            class="d-block">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
+                                    </div>
+                                @endforeach
                             </ul>
                         </div>
                     @endif
 
 
                     <div class="form-group my-2">
-                        <label for="address" class="form-label">Alamat Usaha</label>
+                        <label for="address" class="form-label">Alamat</label>
                         <textarea wire:model="address" name="address" id="address"
                                   class="form-control @error('address') is-invalid @enderror"
                                   placeholder="Masukan alamat" rows="3"></textarea>
                         <x-maz-input-error error="address"/>
                     </div>
 
-                    <x-maz-form-input property="owner" label="Pemilik Usaha" type="text" name="owner"
-                                      placeholder="Masukan nama pemilik usaha"/>
+                    <x-maz-form-input property="owner" label="Pemilik" type="text" name="owner"
+                                      placeholder="Masukan nama pemilik"/>
 
-                    <x-maz-form-input property="logo" label="Logo Usaha" type="file" name="logo"/>
-                    <div wire:loading wire:target="logo">Uploading...</div>
+                    <x-maz-form-input property="logo" label="Logo" type="file" name="logo"/>
 
                     <x-maz-form-input property="certificate" label="Surat Keterangan UMK" type="file"
                                       name="certificate"/>
