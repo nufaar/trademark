@@ -41,13 +41,12 @@ new #[Layout('layouts.guest')] class extends Component {
 }; ?>
 
 <div>
-    <h1 class="auth-title">Sign Up</h1>
-    <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
+    <h1 class="mb-5">Registrasi</h1>
 
     <form wire:submit="register">
         <div class="form-group position-relative has-icon-left mb-4">
             <input wire:model="name" type="text"
-                class="form-control form-control-xl  @error('name') is-invalid @enderror" placeholder="Name"
+                class="form-control form-control-xl  @error('name') is-invalid @enderror" placeholder="Nama"
                 autocomplete="name">
             <x-maz-input-error error='name' />
             <div class="form-control-icon">
@@ -75,7 +74,7 @@ new #[Layout('layouts.guest')] class extends Component {
         <div class="form-group position-relative has-icon-left mb-4">
             <input wire:model="password_confirmation" type="password"
                 class="form-control form-control-xl  @error('password_confirmation') is-invalid @enderror"
-                placeholder="Confirm Password" autocomplete="new-password">
+                placeholder="Konfirmasi Password" autocomplete="new-password">
             <x-maz-input-error error='password_confirmation' />
             <div class="form-control-icon">
                 <i class="bi bi-shield-lock"></i>
@@ -85,7 +84,7 @@ new #[Layout('layouts.guest')] class extends Component {
     </form>
 
     <div class="text-center mt-5 text-lg fs-4">
-        <p class='text-gray-600'>Already have an account? <a href="{{ route('login') }}" class="font-bold">Log
+        <p class='text-gray-600'>Sudah punya akun? <a href="{{ route('login') }}" class="font-bold">Log
                 in</a>.</p>
     </div>
     <div class='mt-3 d-flex align-items-center justify-content-center'>

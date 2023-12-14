@@ -33,34 +33,10 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 
-{{-- <div>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required
-                autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div> --}}
 
 <div>
-    <h1 class="auth-title">Forgot Password</h1>
-    <p class="auth-subtitle mb-5">Input your email and we will send you reset password link.</p>
+    <h1 class="">Lupa Password</h1>
+    <p class="text-xl mb-5">Masukan email kamu dan kami akan mengirimkan tautan untuk mengganti password.</p>
 
     @if (session('status'))
         <div class="alert alert-success"><i class="bi bi-check-circle"></i> {{ session('status') }}</div>
@@ -75,10 +51,10 @@ new #[Layout('layouts.guest')] class extends Component {
                 <i class="bi bi-envelope"></i>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Send</button>
+        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Kirim</button>
     </form>
     <div class="text-center mt-5 text-lg fs-4">
-        <p class='text-gray-600'>Remember your account? <a href="{{ route('login') }}" class="font-bold">Log in</a>.
+        <p class='text-gray-600'>Ingat akun? <a href="{{ route('login') }}" class="font-bold">Log in</a>.
         </p>
     </div>
 </div>
