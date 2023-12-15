@@ -5,16 +5,23 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Volt\Component;
+use Livewire\WithPagination;
 
 new
 #[Layout('layouts.admin')]
 class extends Component {
+
+    use WithPagination;
 
     public $comment = '';
     public $status;
     public $trademark_id = 0;
 
     public Trademark $trademark;
+
+    public $perPage = 5;
+    public $search = '';
+    public $filterStatus = '';
 
     // dibuat renderless agar modal tidak tertutup karena render ulang
     #[Renderless]
@@ -24,10 +31,36 @@ class extends Component {
         $this->status = $status;
     }
 
+    public function searchScope($query, $keyword, $columns)
+    {
+        if ($keyword) {
+            return $query->where(function ($query) use ($keyword, $columns) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
+        return $query;
+    }
+
     public function with()
     {
+//        check if user is pemohon
+
         return [
-            'trademarks' => Trademark::all()
+            'trademarks' => Trademark::query()
+                ->when(Auth::user()->role == 'pemohon', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
+                ->when($this->search, function ($query) {
+                    return $this->searchScope($query, $this->search, ['name', 'owner']);
+                })
+                ->when($this->filterStatus, function ($query) {
+                    return $query->where('status', $this->filterStatus);
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->perPage)
         ];
     }
 
@@ -62,7 +95,8 @@ class extends Component {
             'comment' => $this->comment,
         ]);
 
-        return $this->redirect(route('trademark.index'), navigate: true);
+        $this->reset('comment');
+
     }
 
     public function verifApproved($id)
@@ -74,7 +108,8 @@ class extends Component {
             'comment' => "Permohonan disetujui",
         ]);
 
-        return $this->redirect(route('trademark.index'), navigate: true);
+        $this->reset('comment');
+
     }
 }; ?>
 
@@ -91,14 +126,21 @@ class extends Component {
 
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <h5 class="card-title">
-
-            </h5>
+            <div class="d-flex gap-3">
+                <input wire:model.live.debounce300ms="search" type="text" class="form-control" placeholder="Cari...">
+                <select wire:model.live="filterStatus" class="form-select">
+                    <option value="">Semua</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="revision">Perbaiki</option>
+                    <option value="rejected">Ditolak</option>
+                    <option value="pending">Menunggu</option>
+                </select>
+            </div>
             <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
                     class="bi bi-person-add"></i>
                 Tambah Permohonan</a>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
             <table class="table table-striped" id="table1">
                 <thead>
                 <tr>
@@ -117,7 +159,7 @@ class extends Component {
                                 <div class="d-flex align-items-center">
                                     <div class="me-3">
                                         <img src="{{ asset('storage/logos/' . $trademark->logo) }}"
-                                             alt="logo {{ $trademark->name }}" width="75">
+                                             alt="logo Merek" width="75">
                                     </div>
                                     <div>
                                         <h5>{{ $trademark->name }}</h5>
@@ -182,10 +224,21 @@ class extends Component {
                 </tbody>
             </table>
         </div>
+        <div class="d-flex justify-content-between mx-4">
+            <div>
+                <select wire:model.live="perPage" class="form-select">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                </select>
+            </div>
+            <div>{{ $trademarks->links() }}</div>
+        </div>
     </div>
 
     <!--status revision Modal -->
-    <div class="modal modal-borderless fade text-left" id="statusRevision" tabindex="-1" role="dialog"
+    <div wire:ignore.self class="modal modal-borderless fade text-left" id="statusRevision" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
              role="document">
@@ -221,7 +274,7 @@ class extends Component {
     </div>
 
     <!--status rejected Modal -->
-    <div class="modal modal-borderless fade text-left" id="statusRejected" tabindex="-1" role="dialog"
+    <div wire:ignore.self class="modal modal-borderless fade text-left" id="statusRejected" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
              role="document">
@@ -258,8 +311,6 @@ class extends Component {
 
 
     <script>
-        // If you want to use tooltips in your project, we suggest initializing them globally
-        // instead of a "per-page" level.
         document.addEventListener('DOMContentLoaded', function () {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle-tooltip="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

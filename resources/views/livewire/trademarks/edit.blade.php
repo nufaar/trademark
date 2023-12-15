@@ -132,7 +132,7 @@ class extends Component {
             <div class="card-body">
                 <form wire:submit="edit">
                     <div class="form-group my-2">
-                        <label for="name" class="form-label">Nama merek</label>
+                        <label for="name" class="form-label">Nama Merek</label>
                         <input wire:model.blur="name" type="text"
                                class="form-control @error('name') is-invalid @enderror"
                                placeholder="Masukan nama merek">
@@ -153,17 +153,17 @@ class extends Component {
                     @endif
 
                     <div class="form-group my-2">
-                        <label for="address" class="form-label">Alamat Usaha</label>
+                        <label for="address" class="form-label">Alamat</label>
                         <textarea wire:model="address" name="address" id="address"
                                   class="form-control @error('address') is-invalid @enderror"
                                   placeholder="Masukan alamat" rows="3"></textarea>
                         <x-maz-input-error error="address"/>
                     </div>
 
-                    <x-maz-form-input property="owner" label="Pemilik Usaha" type="text" name="owner"
+                    <x-maz-form-input property="owner" label="Pemilik" type="text" name="owner"
                                       placeholder="Masukan nama pemilik usaha"/>
 
-                    <x-maz-form-input property="logo" label="Logo Usaha" type="file" name="logo"/>
+                    <x-maz-form-input property="logo" label="Logo" type="file" name="logo"/>
                     <div>
                         @if($logo)
                             <img src="{{ $logo->temporaryUrl() }}" alt="logo {{ $name }}" width="100">
