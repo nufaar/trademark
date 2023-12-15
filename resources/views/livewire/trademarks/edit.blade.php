@@ -108,9 +108,12 @@ class extends Component {
             'signature' => $this->signature ? $this->signature->hashName() : $this->oldSignature,
         ]);
 
-        session()->flash('success', 'Data berhasil diubah.');
+        session()->flash('success', 'Permohonan berhasil diubah.');
 
-        return redirect()->route('trademark.index');
+
+
+//        return redirect(route('trademark.index'), navigate: true));
+        $this->redirect(route('trademark.index'));
     }
 
 

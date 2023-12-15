@@ -46,11 +46,10 @@ class extends Component {
 
     public function with()
     {
-//        check if user is pemohon
 
         return [
             'trademarks' => Trademark::query()
-                ->when(Auth::user()->role == 'pemohon', function ($query) {
+                ->when(Auth::user()->hasRole('pemohon'), function ($query) {
                     $query->where('user_id', Auth::id());
                 })
                 ->when($this->search, function ($query) {
@@ -79,6 +78,11 @@ class extends Component {
 
         Trademark::destroy($id);
         session()->flash('success', 'Data berhasil dihapus.');
+        $this->dispatch('showAlert', [
+            'icon' => 'success',
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil dihapus'
+        ]);
     }
 
     public function verif()
@@ -97,6 +101,10 @@ class extends Component {
 
         $this->reset('comment');
 
+        $this->dispatch('showToast', [
+            'type' => 'failed',
+            'message' => 'Permohonan ' . config('constants.status.text.' . $this->status) . '!'
+        ]);
     }
 
     public function verifApproved($id)
@@ -110,10 +118,15 @@ class extends Component {
 
         $this->reset('comment');
 
+        $this->dispatch('showToast', [
+            'type' => 'success',
+            'message' => 'Permohonan Disetujui'
+        ]);
     }
 }; ?>
 
 <div>
+
     <x-slot:title>
         Daftar Permohonan Merek
     </x-slot:title>
@@ -146,7 +159,9 @@ class extends Component {
                 <tr>
                     <th>Permohonan</th>
                     <th>Status</th>
-                    <th>Verifikasi</th>
+                    @can('verify trademark')
+                        <th>Verifikasi</th>
+                    @endcan
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -169,37 +184,39 @@ class extends Component {
                             </td>
                             <td>
                                 <div
-                                    class="badge rou nded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ $trademark->status }}</div>
+                                    class="badge rou nded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ config('constants.status.text.' . $trademark->status) }}</div>
                             </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                    <form wire:submit="verifApproved('{{ $trademark->id }}')">
+                            @can('verify trademark')
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                        <form wire:submit="verifApproved('{{ $trademark->id }}')">
 
-                                        <button type="submit" class="btn icon btn-sm btn-primary"
+                                            <button type="submit" class="btn icon btn-sm btn-primary"
+                                                    data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                                    data-bs-original-title="Setuju">
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </form>
+                                        <button wire:click="change_property('{{ $trademark->id }}', 'revision')"
+                                                type="button"
+                                                class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#statusRevision"
                                                 data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Setuju">
-                                            <i class="bi bi-check-circle"></i>
+                                                data-bs-original-title="Revisi">
+                                            <i class="bi bi-exclamation-circle"></i>
                                         </button>
-                                    </form>
-                                    <button wire:click="change_property('{{ $trademark->id }}', 'revision')"
-                                            type="button"
-                                            class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#statusRevision"
-                                            data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                            data-bs-original-title="Revisi">
-                                        <i class="bi bi-exclamation-circle"></i>
-                                    </button>
-                                    <button wire:click="change_property('{{ $trademark->id }}', 'rejected')"
-                                            type="button"
-                                            class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#statusRejected"
-                                            data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                            data-bs-original-title="Tolak">
-                                        <i class="bi bi-dash-circle"></i>
-                                    </button>
+                                        <button wire:click="change_property('{{ $trademark->id }}', 'rejected')"
+                                                type="button"
+                                                class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#statusRejected"
+                                                data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="Tolak">
+                                            <i class="bi bi-dash-circle"></i>
+                                        </button>
 
-                                </div>
-                            </td>
+                                    </div>
+                                </td>
+                            @endcan
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                     <a href="{{ route('trademark.show', ['trademark' => $trademark->id]) }}"
@@ -224,7 +241,7 @@ class extends Component {
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-between mx-4">
+        <div class="d-flex justify-content-between mx-4 mb-4">
             <div>
                 <select wire:model.live="perPage" class="form-select">
                     <option>5</option>
@@ -309,7 +326,6 @@ class extends Component {
         </div>
     </div>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle-tooltip="tooltip"]'))
@@ -318,4 +334,42 @@ class extends Component {
             })
         }, false);
     </script>
+
+    @if(session('success'))
+        <span class="d-none" id="success">{{ session('success') }}</span>
+    @endif
+
 </div>
+
+@script
+
+<script>
+    let cek = document.getElementById('success')
+    if(cek) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: cek.innerText,
+        })
+    }
+
+    $wire.on('showToast', function (data) {
+        Toastify({
+            text: data[0].message,
+            backgroundColor: data[0].type == 'success' ? 'green' : 'red',
+            duration: 3000,
+        }).showToast();
+    })
+
+
+    $wire.on('showAlert', function (data) {
+        Swal.fire({
+            icon: data[0].icon,
+            title: data[0].title,
+            text: data[0].message,
+        })
+        console.log('alert')
+    })
+
+</script>
+@endscript

@@ -70,8 +70,7 @@ class extends Component {
         ]);
 
         session()->flash('success', 'Data berhasil ditambahkan.');
-
-        return redirect()->route('trademark.index');
+        $this->redirect(route('trademark.index'));
     }
 
 

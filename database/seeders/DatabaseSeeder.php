@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call([
-            PermissionsDemoSeeder::class,
-        ]);
+//        $this->call([
+//            PermissionsDemoSeeder::class,
+//        ]);
 
-        Trademark::factory(10)->create();
+        Trademark::factory(20)->create();
     }
 }
