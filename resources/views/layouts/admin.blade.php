@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
 
+    <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+
     {{ $head ?? '' }}
 </head>
 
@@ -66,6 +68,7 @@
         </footer>
     </div>
 </div>
+
 <script data-navigate-once src="{{ asset('assets/static/js/components/dark.js') }}"></script>
 <script data-navigate-once src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('assets/compiled/js/app.js') }}"></script>
@@ -73,7 +76,8 @@
 <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
 <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('assets/static/js/pages/sweetalert2.js') }}"></script>
-
+<script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+<script src="assets/static/js/pages/dashboard.js"></script>
 
 {{ $script ?? '' }}
 

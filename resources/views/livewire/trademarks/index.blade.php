@@ -138,20 +138,27 @@ class extends Component {
     </x-slot:menu>
 
     <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <div class="d-flex gap-3">
-                <input wire:model.live.debounce300ms="search" type="text" class="form-control" placeholder="Cari...">
-                <select wire:model.live="filterStatus" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="approved">Disetujui</option>
-                    <option value="revision">Perbaiki</option>
-                    <option value="rejected">Ditolak</option>
-                    <option value="pending">Menunggu</option>
-                </select>
+        <div class="card-header">
+            <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <div>
+                        <input wire:model.live.debounce300ms="search" type="text" class="form-control"
+                              placeholder="Cari...">
+                    </div>
+                    <div>
+                        <select wire:model.live="filterStatus" class="form-select">
+                            <option value="">Semua</option>
+                            <option value="approved">Disetujui</option>
+                            <option value="revision">Perbaiki</option>
+                            <option value="rejected">Ditolak</option>
+                            <option value="pending">Menunggu</option>
+                        </select>
+                    </div>
+                </div>
+                <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
+                        class="bi bi-person-add"></i>
+                    Tambah Permohonan</a>
             </div>
-            <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
-                    class="bi bi-person-add"></i>
-                Tambah Permohonan</a>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-striped" id="table1">
@@ -241,7 +248,7 @@ class extends Component {
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-between mx-4 mb-4">
+        <div class="d-flex justify-content-between mx-4 mb-4 mt-3">
             <div>
                 <select wire:model.live="perPage" class="form-select">
                     <option>5</option>

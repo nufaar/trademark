@@ -132,7 +132,7 @@ class extends Component {
 
                     <x-maz-form-input property="signature" label="Tanda Tangan" type="file" name="signature"/>
 
-                    <div class="form-group my-2 d-flex justify-content-end">
+                    <div class="form-group my-3 d-flex justify-content-end flex-column flex-sm-row">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>

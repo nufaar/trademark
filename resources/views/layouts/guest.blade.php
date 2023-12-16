@@ -21,9 +21,8 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <div class="auth-logo">
-                        <a href="/" wire:navigate><img src="{{ asset('assets/compiled/svg/logo.svg') }}"
-                                alt="Logo"></a>
+                    <div style="font-size: 72px" class="mb-10">
+                        <h1><a class="" href="/" wire:navigate>SiMerek</a></h1>
                     </div>
                     {{ $slot }}
                 </div>

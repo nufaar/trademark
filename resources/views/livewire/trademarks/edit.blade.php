@@ -210,7 +210,7 @@ class extends Component {
                                  width="100">
                         @endif
 
-                    <div class="form-group my-2 d-flex justify-content-end">
+                    <div class="form-group my-2 d-flex justify-content-end flex-column flex-sm-row">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>

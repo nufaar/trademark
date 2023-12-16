@@ -12,7 +12,7 @@ return [
             'approved' => 'Diterima',
             'revision' => 'Perlu Perbaikan',
             'rejected' => 'Ditolak',
-            'pending' => 'Menunggu',
+            'pending' => 'Diajukan',
         ],
     ],
     ''

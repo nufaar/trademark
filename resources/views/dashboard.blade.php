@@ -1,3 +1,11 @@
 <x-admin-layout>
-    <x-slot:title>Dashboard</x-slot:title>
+   <livewire:dashboard />
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('cek-dispatch', (event) => {
+                console.log('dispatched');
+            });
+        });
+    </script>
 </x-admin-layout>

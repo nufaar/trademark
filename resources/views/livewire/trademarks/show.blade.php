@@ -37,7 +37,7 @@ class extends Component {
 
                         <h3 class="mt-3">{{ $trademark->name }}</h3>
                         <div
-                            class="badge bg-light-{{ config('constants.status.color.' .  $trademark->status) }}">{{ $trademark->status }}</div>
+                            class="badge bg-light-{{ config('constants.status.color.' .  $trademark->status) }}">{{ config('constants.status.text.' .  $trademark->status) }}</div>
                         @if($trademark->comment)
                             <p class="fs-6 mt-1">{{ $trademark->comment }}</p>
                         @endif

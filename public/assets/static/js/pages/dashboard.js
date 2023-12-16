@@ -1,4 +1,5 @@
-var optionsProfileVisit = {
+console.log('ok')
+let optionsProfileVisit = {
   annotations: {
     position: "back",
   },
@@ -58,7 +59,7 @@ let optionsVisitorsProfile = {
   },
 }
 
-var optionsEurope = {
+let optionsEurope = {
   series: [
     {
       name: "series1",
@@ -134,27 +135,27 @@ let optionsIndonesia = {
   colors: ["#dc3545"],
 }
 
-var chartProfileVisit = new ApexCharts(
+let chartProfileVisit = new ApexCharts(
   document.querySelector("#chart-profile-visit"),
   optionsProfileVisit
 )
-var chartVisitorsProfile = new ApexCharts(
+let chartVisitorsProfile = new ApexCharts(
   document.getElementById("chart-visitors-profile"),
   optionsVisitorsProfile
 )
-var chartEurope = new ApexCharts(
+let chartEurope = new ApexCharts(
   document.querySelector("#chart-europe"),
   optionsEurope
 )
-var chartAmerica = new ApexCharts(
+let chartAmerica = new ApexCharts(
   document.querySelector("#chart-america"),
   optionsAmerica
 )
-var chartIndia = new ApexCharts(
+let chartIndia = new ApexCharts(
   document.querySelector("#chart-india"),
   optionsIndia
 )
-var chartIndonesia = new ApexCharts(
+let chartIndonesia = new ApexCharts(
   document.querySelector("#chart-indonesia"),
   optionsIndonesia
 )
