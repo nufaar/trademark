@@ -90,6 +90,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('{role}/edit', [RoleController::class, 'edit'])->name('edit');
         });
 
+        // route report
+        Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
+            Volt::route('/', 'report.index')->name('index');
+        });
+
     });
 });
 

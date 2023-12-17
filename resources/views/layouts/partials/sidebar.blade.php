@@ -62,6 +62,8 @@
                                     active="{{ Route::is(['role.*']) }}"/>
                 <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}" icon="bi bi-person-fill"
                                     active="{{ Route::is(['article.*']) }}"/>
+                <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}" icon="bi bi-person-fill"
+                                    active="{{ Route::is(['report.*']) }}"/>
             </ul>
         </div>
     </div>

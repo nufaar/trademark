@@ -148,7 +148,7 @@ class extends Component {
                     <div>
                         <select wire:model.live="filterStatus" class="form-select">
                             <option value="">Semua</option>
-                            <option value="approved">Disetujui</option>
+                            <option value="approved">Diterima</option>
                             <option value="revision">Perbaiki</option>
                             <option value="rejected">Ditolak</option>
                             <option value="pending">Menunggu</option>
