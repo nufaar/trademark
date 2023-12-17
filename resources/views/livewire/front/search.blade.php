@@ -30,15 +30,8 @@ new class extends Component {
 }; ?>
 
 <div>
-{{--    <div class="pt-20"></div>--}}
-{{--    <div class="columns-2">--}}
-{{--        <p>Well, let me tell you something, ...</p>--}}
-{{--        <p class="">Sure, go ahead, laugh...</p>--}}
-{{--        <p>Maybe we can live without...</p>--}}
-{{--        <p>Look. If you think this is...</p>--}}
-{{--    </div>--}}
 
-    <div class="flex flex-col w-screen h-screen items-center pt-24">
+    <div class="flex flex-col w-screen h-screen items-center px-6">
         <div class="flex gap-4 w-full justify-center">
             <input wire:model="keyword" type="text" placeholder="Type here" class="input w-full max-w-xs"/>
             <button wire:click="search" class="btn">Search</button>

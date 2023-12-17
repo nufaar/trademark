@@ -49,20 +49,20 @@
                 <x-maz-sidebar-item title="Dashboard" link="{{ route('dashboard') }}" icon="bi bi-grid-fill"
                                     active="{{ Route::is('dashboard') }}"/>
 
-                <x-maz-sidebar-item title="Permohonan" link="{{ route('trademark.index') }}" icon="bi bi-grid-fill"
+                <x-maz-sidebar-item title="Permohonan" link="{{ route('trademark.index') }}" icon="bi bi-ui-checks-grid"
                                     active="{{ Route::is('trademark.*') }}"/>
 
                 <li class="sidebar-title">Administrator</li>
 
                 <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
                                     active="{{ Route::is(['user.*']) }}"/>
-                <x-maz-sidebar-item title="Permission" link="{{ route('permission.index') }}" icon="bi bi-person-fill"
+                <x-maz-sidebar-item title="Permission" link="{{ route('permission.index') }}" icon="bi bi-shield-fill-check"
                                     active="{{ Route::is(['permission.*']) }}"/>
-                <x-maz-sidebar-item title="Role" link="{{ route('role.index') }}" icon="bi bi-person-fill"
+                <x-maz-sidebar-item title="Role" link="{{ route('role.index') }}" icon="bi bi-shield-fill-check"
                                     active="{{ Route::is(['role.*']) }}"/>
-                <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}" icon="bi bi-person-fill"
+                <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}" icon="bi bi-megaphone-fill"
                                     active="{{ Route::is(['article.*']) }}"/>
-                <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}" icon="bi bi-person-fill"
+                <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}" icon="bi bi-clipboard-data-fill"
                                     active="{{ Route::is(['report.*']) }}"/>
             </ul>
         </div>
