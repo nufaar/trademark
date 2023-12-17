@@ -9,3 +9,15 @@ if (! function_exists('private_key')) {
         return $key;
     }
 }
+
+if (! function_exists('scopeSearch')) {
+    function scopeSearch($query, $search, $columns = null) {
+        $query->where(function ($query) use ($search, $columns) {
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'LIKE', "%{$search}%");
+            }
+        });
+
+        return $query;
+    }
+}

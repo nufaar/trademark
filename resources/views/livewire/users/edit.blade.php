@@ -72,19 +72,18 @@ new class extends Component {
 <div>
     <div class="col-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h5 class="card-title">Edit User Information</h5>
+            <div class="card-header d-flex justify-content-end">
                 <a href="{{ route('user.index') }}" class="btn btn-primary icon icon-left"><i
                         class="bi bi-arrow-left"></i> Kembali</a>
             </div>
             <div class="card-body">
                 <form wire:submit="edit">
-                    <x-maz-form-input property="name" label="Name" type="text" name="name"
+                    <x-maz-form-input property="name" label="Nama" type="text" name="name"
                                       placeholder="Enter name"/>
                     <x-maz-form-input property="email" label="Email" type="email" name="email"
                                       placeholder="Enter email"/>
                     <div class="form-group">
-                        <label for="role" class="form-label">Role</label>
+                        <label for="role" class="form-label">Peran</label>
                         <select wire:model="role" class="form-select" id="role">
                             <option>-- Select Role --</option>
                             @foreach($roles as $role)
@@ -94,7 +93,7 @@ new class extends Component {
                     </div>
                     <div class="form-group my-2 d-flex justify-content-end align-items-center">
                         <x-action-message class="me-3" on="user-updated"></x-action-message>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -108,13 +107,13 @@ new class extends Component {
             <div class="card-body">
                 <form wire:submit="updatePassword">
                     <x-maz-form-input property="password" label="Password" type="password" name="password"
-                                      placeholder="Enter new password"/>
-                    <x-maz-form-input property="password_confirmation" label="Confirm Password" type="password"
-                                      name="confirm_password" placeholder="Enter confirm password"/>
+                                      placeholder="Masukan password baru"/>
+                    <x-maz-form-input property="password_confirmation" label="Konfirmasi Password" type="password"
+                                      name="confirm_password" placeholder="Konfirmasi password"/>
 
                     <div class="form-group my-2 d-flex justify-content-end align-items-center">
                         <x-action-message class="me-3" on="password-updated"></x-action-message>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>

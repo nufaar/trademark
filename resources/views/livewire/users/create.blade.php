@@ -43,19 +43,16 @@ new class extends Component {
 <div>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Tambahkan User</h5>
-            </div>
             <div class="card-body">
                 <form wire:submit="store">
-                    <x-maz-form-input property="name" label="Name" type="text" name="name"
+                    <x-maz-form-input property="name" label="Nama" type="text" name="name"
                                       placeholder="Enter name"/>
                     <x-maz-form-input property="email" label="Email" type="email" name="email"
                                       placeholder="Enter email"/>
                     <x-maz-form-input property="password" label="Password" type="password" name="password"
                                       placeholder="Enter password"/>
                     <div class="form-group">
-                        <label for="role" class="form-label">Role</label>
+                        <label for="role" class="form-label">Peran</label>
                         <select wire:model="role" class="form-select" id="role">
                             <option>-- Select Role --</option>
                             @foreach($roles as $role)
@@ -64,7 +61,7 @@ new class extends Component {
                         </select>
                     </div>
 
-                    <div class="form-group my-2 d-flex justify-content-end">
+                    <div class="form-group my-2 d-flex justify-content-end flex-column flex-sm-row">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
