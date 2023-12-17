@@ -36,7 +36,7 @@ new #[Layout('layouts.guest')] class extends Component {
 
         $user->assignRole('pemohon');
 
-        $this->redirect(RouteServiceProvider::HOME, navigate: true);
+        $this->redirect(RouteServiceProvider::HOME, navigate: false);
     }
 }; ?>
 

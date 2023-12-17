@@ -1,4 +1,4 @@
-console.log('ok')
+
 let optionsProfileVisit = {
   annotations: {
     position: "back",
