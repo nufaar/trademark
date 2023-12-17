@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\LoginLog;
+use App\Models\Trademark;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
@@ -15,6 +16,7 @@ class extends Component {
         $this->year = date('Y');
 
         $this->dispatchLoginLog($this->year);
+        $this->dispatchPermohonanLog($this->year);
     }
 
     public function with()
@@ -24,6 +26,10 @@ class extends Component {
             'loginYear' => LoginLog::whereYear('created_at', date('Y'))->get()->count(),
             'loginMonth' => LoginLog::whereMonth('created_at', date('m'))->get()->count(),
             'loginDay' => LoginLog::whereDay('created_at', date('d'))->get()->count(),
+            // permohonan dalam satu hari, bulan, tahun
+            'permohonanYear' => Trademark::whereYear('created_at', date('Y'))->get()->count(),
+            'permohonanMonth' => Trademark::whereMonth('created_at', date('m'))->get()->count(),
+            'permohonanDay' => Trademark::whereDay('created_at', date('d'))->get()->count(),
         ];
     }
 
@@ -50,6 +56,29 @@ class extends Component {
     }
 
 
+    public function dispatchPermohonanLog($year)
+    {
+        $permohonanLogs = Trademark::whereYear('created_at', $year)->get();
+
+        $monthlyCounts = array_fill(1, 12, 0);
+
+        $permohonanCount = $permohonanLogs->groupBy(function ($item) {
+            return $item->created_at->format('n'); // 'n' untuk representasi numerik bulan
+        })->map(function ($item) {
+            return $item->count();
+        })->toArray();
+
+        foreach ($permohonanCount as $month => $count) {
+            $monthlyCounts[$month] = $count;
+        }
+
+        $monthlyValues = array_values($monthlyCounts);
+
+        $this->dispatch('dataPermohonan', $monthlyValues);
+
+    }
+
+
 }; ?>
 
 <div>
@@ -57,13 +86,12 @@ class extends Component {
 
     <section class="row">
         <div class="col-12 col-lg-9 order-1 order-lg-0">
-
-{{--            Chart start here --}}
+            {{--            Chart start here --}}
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Riwayat Akses</h4>
+                            <h4>Akses Pengguna</h4>
                         </div>
                         <div class="card-body">
 
@@ -120,6 +148,80 @@ class extends Component {
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Tahun Ini</h6>
                                         <h6 class="font-extrabold mb-0">{{ $loginYear }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row">
+        <div class="col-12 col-lg-9 order-1 order-lg-0">
+            {{--            Chart start here --}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Permohonan</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div id="permohonan-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 order-0 order-lg-1">
+            <div class="row flex-lg-column">
+                <div class="col-6 col-lg-12 col-md-4">
+                    <div class="card">
+                        <div class="card-body px-4 py-4">
+                            <div class="row">
+                                <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
+                                    <div class="stats-icon purple mb-2 col-md-4">
+                                        <i class="iconly-boldShow"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Hari Ini</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $permohonanDay }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-12 col-md-4">
+                    <div class="card">
+                        <div class="card-body px-4 py-4">
+                            <div class="row">
+                                <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
+                                    <div class="stats-icon purple">
+                                        <i class="iconly-boldShow"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Bulan Ini</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $permohonanMonth }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-12 col-md-4">
+                    <div class="card">
+                        <div class="card-body px-4 py-4">
+                            <div class="row">
+                                <div class="d-flex justify-content-start gap-3">
+                                    <div class="stats-icon purple mb-2 col-4">
+                                        <i class="iconly-boldShow"></i>
+                                    </div>
+                                    <div class="col-8">
+                                        <h6 class="text-muted font-semibold">Tahun Ini</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $permohonanYear }}</h6>
                                     </div>
                                 </div>
                             </div>
