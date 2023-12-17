@@ -47,15 +47,12 @@ new class extends Component {
 <div>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Edit Role</h5>
-            </div>
             <div class="card-body">
                 <form wire:submit="edit">
-                    <x-maz-form-input property="name" label="Role" type="text" name="role"
-                                      placeholder="Enter role"/>
+                    <x-maz-form-input property="name" label="Peran" type="text" name="role"
+                                      placeholder="Masukan peran"/>
 
-                    <div class="form-group my-2 d-flex justify-content-end">
+                    <div class="form-group my-2 d-flex justify-content-end flex-column flex-sm-row">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>
@@ -70,14 +67,20 @@ new class extends Component {
             </div>
             <div class="card-body">
                 <form wire:submit="assign">
+                    <div class="row">
                     @foreach($permissions as $permission)
-                        <div class="checkbox" >
-                            <input wire:model="data" type="checkbox" id="publish" class="form-check-input" value="{{ $permission->name }}" @if($role->hasPermissionTo($permission->name)) checked @endif>
-                            <label for="publish">{{ $permission->name }}</label>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-1">
+                            <div class="checkbox">
+                                <input wire:model="data" type="checkbox" id="publish" class="form-check-input"
+                                       value="{{ $permission->name }}"
+                                       @if($role->hasPermissionTo($permission->name)) checked @endif>
+                                <label for="publish">{{ $permission->name }}</label>
+                            </div>
                         </div>
                     @endforeach
+                    </div>
                     <div class="form-group my-2 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button type="submit" class="btn btn-primary">Terapkan</button>
                     </div>
                 </form>
             </div>
