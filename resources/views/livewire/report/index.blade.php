@@ -76,7 +76,7 @@ class extends Component {
                     </div>
                 </div>
 
-                <div>
+                <div class="d-flex w-100 justify-content-end">
                     <button wire:click="export" class="btn btn-primary">Export</button>
                 </div>
             </div>
