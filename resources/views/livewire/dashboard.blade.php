@@ -85,14 +85,12 @@ class extends Component {
     <x-slot:title>Dashboard</x-slot:title>
 
     <section class="row">
+        <h5 class="mt-4 mb-3">Akses Pengguna</h5>
         <div class="col-12 col-lg-9 order-1 order-lg-0">
             {{--            Chart start here --}}
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Akses Pengguna</h4>
-                        </div>
                         <div class="card-body">
 
                             <div id="login-chart"></div>
@@ -109,7 +107,7 @@ class extends Component {
                             <div class="row">
                                 <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
                                     <div class="stats-icon purple mb-2 col-md-4">
-                                        <i class="iconly-boldShow"></i>
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Hari Ini</h6>
@@ -125,8 +123,8 @@ class extends Component {
                         <div class="card-body px-4 py-4">
                             <div class="row">
                                 <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
-                                    <div class="stats-icon purple">
-                                        <i class="iconly-boldShow"></i>
+                                    <div class="stats-icon blue mb-2 col-4">
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Bulan Ini</h6>
@@ -142,8 +140,8 @@ class extends Component {
                         <div class="card-body px-4 py-4">
                             <div class="row">
                                 <div class="d-flex justify-content-start gap-3">
-                                    <div class="stats-icon purple mb-2 col-4">
-                                        <i class="iconly-boldShow"></i>
+                                    <div class="stats-icon red mb-2 col-4">
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Tahun Ini</h6>
@@ -159,14 +157,12 @@ class extends Component {
     </section>
 
     <section class="row">
+        <h5 class="my-3">Permohonan</h5>
         <div class="col-12 col-lg-9 order-1 order-lg-0">
             {{--            Chart start here --}}
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Permohonan</h4>
-                        </div>
                         <div class="card-body">
 
                             <div id="permohonan-chart"></div>
@@ -183,7 +179,7 @@ class extends Component {
                             <div class="row">
                                 <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
                                     <div class="stats-icon purple mb-2 col-md-4">
-                                        <i class="iconly-boldShow"></i>
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Hari Ini</h6>
@@ -199,8 +195,8 @@ class extends Component {
                         <div class="card-body px-4 py-4">
                             <div class="row">
                                 <div class="d-flex flex-column flex-md-row justify-content-start gap-3">
-                                    <div class="stats-icon purple">
-                                        <i class="iconly-boldShow"></i>
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Bulan Ini</h6>
@@ -216,8 +212,8 @@ class extends Component {
                         <div class="card-body px-4 py-4">
                             <div class="row">
                                 <div class="d-flex justify-content-start gap-3">
-                                    <div class="stats-icon purple mb-2 col-4">
-                                        <i class="iconly-boldShow"></i>
+                                    <div class="stats-icon red mb-2 col-4">
+                                        <i class="iconly-boldGraph"></i>
                                     </div>
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Tahun Ini</h6>

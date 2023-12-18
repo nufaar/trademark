@@ -13,12 +13,12 @@ class extends Component {
 
 <div>
     <x-slot:title>
-        Detail Permohonan
+        Rincian Permohonan
     </x-slot:title>
 
     <x-slot:menu>
-        <li class="breadcrumb-item"><a href="{{ route('trademark.index') }}">Trademark</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Detail Trademark
+        <li class="breadcrumb-item"><a href="{{ route('trademark.index') }}">Permohonan</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Rincian Trademark
         </li>
     </x-slot:menu>
 
