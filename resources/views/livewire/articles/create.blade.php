@@ -51,9 +51,6 @@ new class extends Component {
 <div>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Tambahkan Pengumuman</h5>
-            </div>
             <div class="card-body">
                 <form wire:submit="store">
                     <div class="row">
@@ -71,13 +68,14 @@ new class extends Component {
                         </div>
                     </div>
 
-                    <div class="form-group my-2">
-                        <label for="address" class="form-label">Konten</label>
-                        <textarea wire:model="content" name="content" id="address"
-                                  class="form-control @error('content') is-invalid @enderror"
-                                  placeholder="Masukan konten" rows="3"></textarea>
-                        <x-maz-input-error error="content"/>
+                    <div wire:ignore class="my-2">
+                        <label for="content" class="form-label">Konten</label>
+                        <textarea wire:model="content" id="content"></textarea>
                     </div>
+                    @error('content')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+
 
                     <x-maz-form-input property="image" label="Gambar" type="file" name="image"/>
 
@@ -88,12 +86,39 @@ new class extends Component {
                         </div>
                     </div>
 
-                    <div class="form-group my-2 d-flex justify-content-end">
+                    <div class="form-group my-2 d-flex justify-content-end flex-column flex-md-row">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.tiny.cloud/1/oqad5da4gvp1dmdb6yhytc34893q38cra9goyqxiqj2ot4c6/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
+    <script>
+
+        tinymce.init({
+
+            selector: 'textarea#content', // Replace this CSS selector to match the placeholder element for TinyMCE
+
+            plugins: 'powerpaste advcode table lists checklist',
+
+            toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table',
+
+            setup: function (editor) {
+                editor.on('init change', function () {
+                    editor.save();
+                });
+                editor.on('change', function (e) {
+                    @this.
+                    set('content', editor.getContent());
+                });
+            }
+
+        });
+
+    </script>
 
 </div>
