@@ -15,5 +15,13 @@ return [
             'pending' => 'Diajukan',
         ],
     ],
-    ''
+    'trademark' => [
+        'status' => [
+            'color' => [
+                'Berakhir' => 'error',
+                'Didaftar' => 'success',
+                'Ditarik Kembali' => 'warning',
+            ]
+        ]
+    ]
 ];

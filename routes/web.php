@@ -20,7 +20,7 @@ use Livewire\Volt\Volt;
 |
 */
 
-Route::view('/', 'front.index')->name('front.index');
+Volt::route('/', 'front.index')->name('front.index');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

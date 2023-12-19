@@ -12,7 +12,7 @@ new class extends Component {
     public $slug;
     public $content;
     public $image;
-    public $is_published;
+    public $is_published = false;
 
     public function updated($property)
     {
