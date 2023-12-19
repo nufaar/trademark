@@ -21,6 +21,8 @@ use Livewire\Volt\Volt;
 */
 
 Volt::route('/', 'front.index')->name('front.index');
+Volt::route('pengumuman', 'front.announcement.index')->name('front.announcement');
+Volt::route('pengumuman/{article:slug}', 'front.announcement.detail')->name('front.announcement.show');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
