@@ -60,6 +60,13 @@ class extends Component {
                         <p class="mb-0">Tanda Tangan Pemohon</p>
                         <img src="{{ asset('storage/signatures/' . $trademark->signature) }}" alt="" width="200">
                     </div>
+                    @if($trademark->certificate)
+                    <div>
+                        <p>Surat Keterangan UMK</p>
+                        <a href="{{ asset('storage/certificates/' . $trademark->certificate) }}" target="_blank"
+                            class="btn btn-primary">Lihat</a>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
