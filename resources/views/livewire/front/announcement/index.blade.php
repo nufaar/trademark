@@ -16,7 +16,7 @@ class extends Component {
 }; ?>
 
 <div>
-
+    <p class="font-semibold text-xl mb-4 text-center mt-6">Pengumuman</p>
     <div class="mt-6 p-3 w-full flex flex-wrap">
         @foreach($announcements as $announcement)
             <div class="w-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 p-2">

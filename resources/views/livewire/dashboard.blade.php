@@ -84,6 +84,7 @@ class extends Component {
 <div>
     <x-slot:title>Dashboard</x-slot:title>
 
+    @can('verify trademark')
     <section class="row">
         <h5 class="mt-4 mb-3">Akses Pengguna</h5>
         <div class="col-12 col-lg-9 order-1 order-lg-0">
@@ -155,6 +156,7 @@ class extends Component {
             </div>
         </div>
     </section>
+    @endcan
 
     <section class="row">
         <h5 class="my-3">Permohonan</h5>

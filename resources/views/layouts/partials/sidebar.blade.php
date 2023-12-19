@@ -52,6 +52,8 @@
                 <x-maz-sidebar-item title="Permohonan" link="{{ route('trademark.index') }}" icon="bi bi-ui-checks-grid"
                                     active="{{ Route::is('trademark.*') }}"/>
 
+                @can('verify trademark')
+
                 <li class="sidebar-title">Administrator</li>
 
                 <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
@@ -64,6 +66,7 @@
                                     active="{{ Route::is(['article.*']) }}"/>
                 <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}" icon="bi bi-clipboard-data-fill"
                                     active="{{ Route::is(['report.*']) }}"/>
+                @endcan
             </ul>
         </div>
     </div>

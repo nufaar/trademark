@@ -41,14 +41,14 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['verified'])->group(function () {
 
         // route user
-        Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['can:delete user']], function () {
             Route::get('/', function () {
                 return view('users.index');
             })->name('index')->middleware('can:create user');
             Route::get('create', function () {
                 return view('users.create');
             })->name('create')->middleware('can:create user');
-            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit')->middleware('can:edit user');
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit');
         });
 
         // route trademark
@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // route artikel
-        Route::group(['prefix' => 'artikel', 'as' => 'article.'], function () {
+        Route::group(['prefix' => 'artikel', 'as' => 'article.', 'middleware' => ['can:delete article']], function () {
             Route::get('/', function () {
                 return view('articles.index');
             })->name('index');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // route permission
-        Route::group(['prefix' => 'permission', 'as' => 'permission.'], function () {
+        Route::group(['prefix' => 'permission', 'as' => 'permission.', 'middleware' => ['can:delete user']], function () {
             Route::get('/', function () {
                 return view('permissions.index');
             })->name('index');
@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // route role
-        Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
+        Route::group(['prefix' => 'role', 'as' => 'role.', 'middleware' => ['can:delete user']], function () {
             Route::get('/', function () {
                 return view('roles.index');
             })->name('index');
@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // route report
-        Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
+        Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => ['can:delete user']], function () {
             Volt::route('/', 'report.index')->name('index');
         });
 
