@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Article;
 use App\Models\Trademark;
 use Illuminate\Database\Seeder;
 
@@ -19,10 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-//        $this->call([
-//            PermissionsDemoSeeder::class,
-//        ]);
+        $this->call([
+            PermissionsDemoSeeder::class,
+        ]);
 
         Trademark::factory(20)->create();
+
+        Article::factory(10)->create();
     }
 }

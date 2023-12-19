@@ -62,7 +62,7 @@ class PermissionsDemoSeeder extends Seeder
 
         // create demo users
         $user = \App\Models\User::factory()->create([
-            'name' => 'nufa',
+            'name' => 'Nufa',
             'email' => 'nufa@app.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),

@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // route artikel
-        Route::group(['prefix' => 'artikel', 'as' => 'article.', 'middleware' => ['can:delete article']], function () {
+        Route::group(['prefix' => 'artikel', 'as' => 'article.', 'middleware' => ['can:delete articles']], function () {
             Route::get('/', function () {
                 return view('articles.index');
             })->name('index');
