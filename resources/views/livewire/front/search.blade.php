@@ -55,7 +55,6 @@ new class extends Component {
                                 <div>
                                     <p class="badge badge-{{ config('constants.trademark.status.color.' . $trademark['_source']['status_group']['status_group']) }}">{{ $trademark['_source']['status_group']['status_group'] }}</p>
                                 </div>
-                                <div>{{ $trademark['_source']['nomor_permohonan'] }}</div>
                             </div>
                         </div>
                     </div>

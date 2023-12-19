@@ -16,15 +16,15 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a href="{{ route('front.announcement') }}">Pengumuman</a></li>
+                    <li><a wire:navigate href="{{ route('front.announcement') }}">Pengumuman</a></li>
                     <li><a>Rekap Permohonan</a></li>
                 </ul>
             </div>
-            <a href="{{ route('front.index') }}" class="btn btn-ghost text-xl">SiMerek</a>
+            <a wire:navigate href="{{ route('front.index') }}" class="btn btn-ghost text-xl">SiMerek</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
-                <li><a href="{{ route('front.announcement') }}" class="@if(Route::is('front.announcement')) font-semibold @endif">Pengumuman</a></li>
+                <li><a wire:navigate href="{{ route('front.announcement') }}" class="@if(Route::is('front.announcement')) font-semibold @endif">Pengumuman</a></li>
                 <li><a>Rekap Permohonan</a></li>
             </ul>
         </div>
