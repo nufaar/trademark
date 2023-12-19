@@ -34,7 +34,7 @@ new class extends Component {
 <div>
 
     <div class="flex flex-col items-center px-6">
-        <h1 class="font-semibold text-xl mb-4">Penelusuran Data Merek</h1>
+        <h1 class="font-semibold text-xl mb-4">Penelusuran Data Merek PDKI</h1>
         <div class="flex gap-4 w-full justify-center">
             <input wire:model="keyword" type="text" placeholder="Cari..." class="input w-full max-w-xs input-bordered"/>
             <button wire:click="search" class="btn">Cari</button>
