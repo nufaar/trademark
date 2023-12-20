@@ -48,7 +48,7 @@ class extends Component {
             'address' => 'required|string',
             'owner' => 'required|string|max:255',
             'logo' => 'nullable|image|max:2048',
-            'certificate' => 'nullable|max:5120',
+            'certificate' => 'nullable|max:5120|file|mimes:pdf,jpg,jpeg,png',
             'signature' => 'nullable|image|max:2048',
         ];
     }

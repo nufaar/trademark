@@ -19,7 +19,7 @@ class extends Component {
     public $owner;
     #[Validate('required|image|max:2048')]
     public $logo;
-    #[Validate('max:5120')]
+    #[Validate('max:5120|file|mimes:pdf,jpg,jpeg,png')]
     public $certificate;
     #[Validate('required|image|max:2048')]
     public $signature;

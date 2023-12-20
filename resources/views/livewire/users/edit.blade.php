@@ -85,7 +85,6 @@ new class extends Component {
                     <div class="form-group">
                         <label for="role" class="form-label">Peran</label>
                         <select wire:model="role" class="form-select" id="role">
-                            <option>-- Select Role --</option>
                             @foreach($roles as $role)
                                 <option value="{{ $role }}">{{ $role }}</option>
                             @endforeach
