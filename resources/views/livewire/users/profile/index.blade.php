@@ -70,16 +70,17 @@
                     <form wire:submit="deleteUser">
                         <p>Akun kamu akan dihapus secara permanen dan tidak dapat dikembalikan</p>
                         <input wire:model="password_delete" @if (auth()->user()->socialAccounts->isNotEmpty()) disabled @endif
-                            type="password" class="form-control" placeholder="Masukan password" value="">
+                            type="password" class="form-control @error('password_delete') is-invalid @enderror" placeholder="Masukan password" value="">
+                        <x-maz-input-error error="password_delete" />
                         <div class="form-check mt-3">
                             <div class="checkbox">
-                                <input type="checkbox" id="iaggree" class="form-check-input">
+                                <input wire:model.live="agree" type="checkbox" id="iaggree" class="form-check-input">
                                 <label for="iaggree">Ceklis untuk menyetujui.</label>
                             </div>
                         </div>
                         <div class="form-group my-2 d-flex justify-content-end">
                             <button type="submit" class="btn btn-danger" id="btn-delete-account"
-                                disabled>Hapus</button>
+                                @if(!$agree) disabled @endif>Hapus</button>
                         </div>
                     </form>
                 </div>

@@ -23,6 +23,7 @@ class Index extends Component
     public string $password_confirmation = '';
     public string $password_delete = '';
 
+    public $agree = false;
     /**
      * Mount the component.
      */

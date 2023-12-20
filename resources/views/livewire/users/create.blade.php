@@ -9,6 +9,7 @@ new class extends Component {
     public $name;
     public $email;
     public $password;
+    public $password_confirmation;
     public $role = 'pemohon';
 
     public function with()
@@ -23,7 +24,7 @@ new class extends Component {
         $this->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
 
         ]);
 
@@ -47,11 +48,14 @@ new class extends Component {
             <div class="card-body">
                 <form wire:submit="store">
                     <x-maz-form-input property="name" label="Nama" type="text" name="name"
-                                      placeholder="Enter name"/>
+                                      placeholder="Masukan nama"/>
                     <x-maz-form-input property="email" label="Email" type="email" name="email"
-                                      placeholder="Enter email"/>
+                                      placeholder="Masukan email"/>
                     <x-maz-form-input property="password" label="Password" type="password" name="password"
-                                      placeholder="Enter password"/>
+                                      placeholder="Masukan password"/>
+                    <x-maz-form-input property="password_confirmation" label="Konfirmasi Password" type="password"  name="password_confirmation"
+                                      placeholder="Konfirmasi password"/>
+
                     <div class="form-group">
                         <label for="role" class="form-label">Peran</label>
                         <select wire:model="role" class="form-select" id="role">
