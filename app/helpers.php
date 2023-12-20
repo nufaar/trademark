@@ -21,3 +21,18 @@ if (! function_exists('scopeSearch')) {
         return $query;
     }
 }
+
+if (! function_exists('getSimilarity')) {
+    function getSimilarity($trademarks, $name)
+    {
+        $comparison = new \Atomescrochus\StringSimilarities\Compare();
+        $result = [];
+        foreach ($trademarks as $trademark) {
+            $result[] = [
+                'name' => $trademark['_source']['nama_merek'],
+                'score' => $comparison->smg(Str::lower($name), Str::lower($trademark['_source']['nama_merek'])) * 100
+            ];
+        }
+        return $result;
+    }
+}

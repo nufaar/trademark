@@ -102,8 +102,8 @@ class extends Component {
         $this->reset('comment');
 
         $this->dispatch('showToast', [
-            'type' => 'failed',
-            'message' => 'Permohonan ' . config('constants.status.text.' . $this->status) . '!'
+            'type' => 'success',
+            'message' => 'Permohonan berhail diverifikasi!'
         ]);
     }
 
@@ -120,7 +120,7 @@ class extends Component {
 
         $this->dispatch('showToast', [
             'type' => 'success',
-            'message' => 'Permohonan Disetujui'
+            'message' => 'Permohonan Berhasil Diverifikasi!'
         ]);
     }
 }; ?>
@@ -200,7 +200,7 @@ class extends Component {
 
                                             <button type="submit" class="btn icon btn-sm btn-primary"
                                                     data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="Setuju">
+                                                    data-bs-original-title="Setuju" @if($trademark->status == 'approved') disabled @endif>
                                                 <i class="bi bi-check-circle"></i>
                                             </button>
                                         </form>
@@ -209,7 +209,7 @@ class extends Component {
                                                 class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#statusRevision"
                                                 data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Revisi">
+                                                data-bs-original-title="Revisi" @if($trademark->status == 'revision') disabled @endif>
                                             <i class="bi bi-exclamation-circle"></i>
                                         </button>
                                         <button wire:click="change_property('{{ $trademark->id }}', 'rejected')"
@@ -217,7 +217,7 @@ class extends Component {
                                                 class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#statusRejected"
                                                 data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Tolak">
+                                                data-bs-original-title="Tolak" @if($trademark->status == 'rejected') disabled @endif>
                                             <i class="bi bi-dash-circle"></i>
                                         </button>
 

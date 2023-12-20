@@ -14,6 +14,8 @@ new class extends Component {
     public $image;
     public $is_published = false;
 
+
+
     public function updated($property)
     {
         if ($property == 'title') {

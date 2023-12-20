@@ -28,6 +28,8 @@ class extends Component {
 //    from api
     public $trademarks = [];
 
+    public $maxScore;
+
     public function mount(Trademark $trademark)
     {
         $this->trademark = $trademark;
@@ -60,23 +62,20 @@ class extends Component {
             'Pdki-Signature' => $pdki_sign
         ])->get($url);
 
-        $this->trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
+        $trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
+        $this->trademarks = getSimilarity($trademarks, $this->name);
+
 
         if (empty($this->trademarks)) {
             $this->validateOnly('name');
         } else {
-            $this->addError('name', 'Merek sudah diambil.');
+            $this->maxScore = $this->trademarks[0]['score'];
         }
     }
 
     public function edit()
     {
         $this->validate();
-
-        if ($this->trademarks) {
-            $this->addError('name', 'Merek sudah diambil.');
-            return;
-        }
 
         if ($this->logo) {
             $this->logo->store('logos', 'public');
@@ -133,6 +132,10 @@ class extends Component {
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @if($maxScore > 99)
+                    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i>
+                        Merek sudah digunakan!</div>
+                @endif
                 <form wire:submit="edit">
                     <div class="form-group my-2">
                         <label for="name" class="form-label">Nama Merek</label>
@@ -143,13 +146,16 @@ class extends Component {
                     </div>
                     @if($trademarks)
                         <div class="mb-2 text-sm">
-                            <ul>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-danger">Merek sudah digunakan!</li>
                                 @foreach($trademarks as $trademark)
-                                    <div class="d-block text-danger mb-2">
-                                        <div>{{ $trademark['_source']['nama_merek'] }}</div>
-                                        <span
-                                            class="d-block">{{ number_format($trademark['_score'], 2, '.', '') . '% kesamaan' }}</span>
-                                    </div>
+                                    <li class="list-group-item">
+                                        <div class=" mb-2">
+                                            <div class="font-bold">{{ $trademark['name'] }}</div>
+                                            <span
+                                                class="d-block">{{ $trademark['score'] . '% kesamaan' }}</span>
+                                        </div>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
