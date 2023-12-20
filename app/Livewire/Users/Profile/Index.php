@@ -120,7 +120,7 @@ class Index extends Component
 
         tap(Auth::user(), $logout(...))->delete();
 
-        $this->redirect('/', navigate: true);
+        $this->redirect('/', navigate: false);
     }
 
     public function render()
