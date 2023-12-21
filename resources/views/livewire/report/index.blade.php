@@ -77,7 +77,9 @@ class extends Component {
                 </div>
 
                 <div class="d-flex w-100 justify-content-end">
-                    <button wire:click="export" class="btn btn-primary">Export</button>
+                    @can('export report')
+                        <button wire:click="export" class="btn btn-primary">Export</button>
+                    @endcan
                 </div>
             </div>
         </div>

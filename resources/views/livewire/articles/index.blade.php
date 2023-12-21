@@ -53,9 +53,11 @@ new class extends Component {
                 <input wire:model.live.debounce300ms="search" type="text" class="form-control"
                        placeholder="Cari...">
             </div>
-            <a href="{{ route('article.create') }}" class="btn btn-primary icon icon-left"><i
-                    class="bi bi-person-add"></i>
-                Tambah Pengumuman</a>
+            @can('create articles')
+                <a href="{{ route('article.create') }}" class="btn btn-primary icon icon-left"><i
+                        class="bi bi-person-add"></i>
+                    Tambah Pengumuman</a>
+            @endcan
         </div>
     </div>
 
@@ -66,32 +68,43 @@ new class extends Component {
                     <div class="card-content">
                         <div>
                             <img src="{{ asset('storage/articles/' . $article->image) }}" alt=""
-                                class="card-img-top img-fluid" style="object-fit: cover; height: 200px">
+                                 class="card-img-top img-fluid" style="object-fit: cover; height: 200px">
                             <div class="card-body pb-1">
-                                <small>{{ $article->updated_at->diffForHumans() }}</small>
+                                @if($article->is_published)
+                                    <small>{{ $article->updated_at->diffForHumans() }}</small>
+                                @endif
                                 <h5>{{ $article->title }}</h5>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between pt-0 align-items-center">
                         <div>
-                            <input wire:click="publish({{ $article->id }})" type="checkbox" class="form-check-input"
-                                   @if($article->is_published) checked @endif> Publish
+                            @can('publish articles')
+                                <input wire:click="publish({{ $article->id }})" type="checkbox" class="form-check-input"
+                                       @if($article->is_published) checked @endif> Publish
+                            @endcan
                         </div>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                            <a href="{{ route('article.show', ['article' => $article->slug]) }}"
-                               class="btn icon btn-sm btn-primary"
-                               data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                               data-bs-original-title="Detail"><i class="bi bi-eye"></i></a>
-                            <a href="{{ route('article.edit', ['article' => $article->id]) }}"
-                               class="btn icon btn-sm btn-primary"
-                               data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                               data-bs-original-title="Edit"><i class="bi bi-pencil"></i></a>
-                            <button wire:click="destroy({{ $article->id }})"
-                                    class="btn icon btn-sm btn-primary"
-                                    data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                    data-bs-original-title="Hapus">
-                                <i class="bi bi-x-lg"></i></button>
+                            @can('show articles')
+                                <a href="{{ route('article.show', ['article' => $article->slug]) }}"
+                                   class="btn icon btn-sm btn-primary"
+                                   data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                   data-bs-original-title="Detail"><i class="bi bi-eye"></i></a>
+                            @endcan
+                            @can('edit articles')
+                                <a href="{{ route('article.edit', ['article' => $article->id]) }}"
+                                   class="btn icon btn-sm btn-primary"
+                                   data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                   data-bs-original-title="Edit"><i class="bi bi-pencil"></i></a>
+                            @endcan
+                            @can('delete articles')
+                                <button wire:click="destroy({{ $article->id }})"
+                                        class="btn icon btn-sm btn-primary"
+                                        data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                        data-bs-original-title="Hapus">
+                                    <i class="bi bi-x-lg"></i></button>
+                            @endcan
+
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ new class extends Component {
                     });
                 })
                 ->paginate($this->perPage),
-            'roles' => Role::all()  ,
+            'roles' => Role::all(),
         ];
     }
 
@@ -82,10 +82,14 @@ new class extends Component {
                         <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                         <td>
                             <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                <a href="{{ route('user.edit', ['user' => $user->id]) }}"
-                                   class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
-                                <button wire:click="destroy({{ $user->id }})" class="btn icon btn-sm btn-primary"><i
-                                        class="bi bi-x-lg"></i></button>
+                                @can('edit user')
+                                    <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                       class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
+                                @endcan
+                                @can('delete user')
+                                    <button wire:click="destroy({{ $user->id }})" class="btn icon btn-sm btn-primary"><i
+                                            class="bi bi-x-lg"></i></button>
+                                @endcan
                             </div>
                         </td>
 
@@ -115,7 +119,7 @@ new class extends Component {
 @script
 <script>
     let cek = document.getElementById('success')
-    if(cek) {
+    if (cek) {
         Swal.fire({
             icon: 'success',
             title: 'Berhasil',

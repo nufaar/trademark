@@ -143,7 +143,7 @@ class extends Component {
                 <div class="d-flex flex-column flex-sm-row gap-3">
                     <div>
                         <input wire:model.live.debounce300ms="search" type="text" class="form-control"
-                              placeholder="Cari...">
+                               placeholder="Cari...">
                     </div>
                     <div>
                         <select wire:model.live="filterStatus" class="form-select">
@@ -155,9 +155,11 @@ class extends Component {
                         </select>
                     </div>
                 </div>
-                <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
-                        class="bi bi-person-add"></i>
-                    Tambah Permohonan</a>
+                @can('create trademark')
+                    <a href="{{ route('trademark.create') }}" class="btn btn-primary icon icon-left" wire:navigate><i
+                            class="bi bi-person-add"></i>
+                        Tambah Permohonan</a>
+                @endcan
             </div>
         </div>
         <div class="card-body table-responsive">
@@ -200,7 +202,8 @@ class extends Component {
 
                                             <button type="submit" class="btn icon btn-sm btn-primary"
                                                     data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="Setuju" @if($trademark->status == 'approved') disabled @endif>
+                                                    data-bs-original-title="Setuju"
+                                                    @if($trademark->status == 'approved') disabled @endif>
                                                 <i class="bi bi-check-circle"></i>
                                             </button>
                                         </form>
@@ -209,7 +212,8 @@ class extends Component {
                                                 class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#statusRevision"
                                                 data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Revisi" @if($trademark->status == 'revision') disabled @endif>
+                                                data-bs-original-title="Revisi"
+                                                @if($trademark->status == 'revision') disabled @endif>
                                             <i class="bi bi-exclamation-circle"></i>
                                         </button>
                                         <button wire:click="change_property('{{ $trademark->id }}', 'rejected')"
@@ -217,7 +221,8 @@ class extends Component {
                                                 class="btn icon btn-sm btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#statusRejected"
                                                 data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Tolak" @if($trademark->status == 'rejected') disabled @endif>
+                                                data-bs-original-title="Tolak"
+                                                @if($trademark->status == 'rejected') disabled @endif>
                                             <i class="bi bi-dash-circle"></i>
                                         </button>
 
@@ -226,19 +231,25 @@ class extends Component {
                             @endcan
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                    <a href="{{ route('trademark.show', ['trademark' => $trademark->id]) }}"
-                                       class="btn icon btn-sm btn-primary"
-                                       data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                       data-bs-original-title="Detail"><i class="bi bi-eye"></i></a>
-                                    <a href="{{ route('trademark.edit', ['trademark' => $trademark->id]) }}"
-                                       class="btn icon btn-sm btn-primary"
-                                       data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                       data-bs-original-title="Edit"><i class="bi bi-pencil"></i></a>
-                                    <button wire:click="destroy({{ $trademark->id }})"
-                                            class="btn icon btn-sm btn-primary"
-                                            data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
-                                            data-bs-original-title="Hapus">
-                                        <i class="bi bi-x-lg"></i></button>
+                                    @can('show trademark')
+                                        <a href="{{ route('trademark.show', ['trademark' => $trademark->id]) }}"
+                                           class="btn icon btn-sm btn-primary"
+                                           data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                           data-bs-original-title="Detail"><i class="bi bi-eye"></i></a>
+                                    @endcan
+                                    @can('edit trademark')
+                                        <a href="{{ route('trademark.edit', ['trademark' => $trademark->id]) }}"
+                                           class="btn icon btn-sm btn-primary"
+                                           data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                           data-bs-original-title="Edit"><i class="bi bi-pencil"></i></a>
+                                    @endcan
+                                    @can('delete trademark')
+                                        <button wire:click="destroy({{ $trademark->id }})"
+                                                class="btn icon btn-sm btn-primary"
+                                                data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="Hapus">
+                                            <i class="bi bi-x-lg"></i></button>
+                                    @endcan
                                 </div>
                             </td>
 
@@ -352,7 +363,7 @@ class extends Component {
 
 <script>
     let cek = document.getElementById('success')
-    if(cek) {
+    if (cek) {
         Swal.fire({
             icon: 'success',
             title: 'Berhasil',

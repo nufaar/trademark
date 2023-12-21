@@ -52,20 +52,23 @@
                 <x-maz-sidebar-item title="Permohonan" link="{{ route('trademark.index') }}" icon="bi bi-ui-checks-grid"
                                     active="{{ Route::is('trademark.*') }}"/>
 
-                @can('verify trademark')
 
-                <li class="sidebar-title">Administrator</li>
+                @can('show sidebar admin')
+                    <li class="sidebar-title">Administrator</li>
 
-                <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
-                                    active="{{ Route::is(['user.*']) }}"/>
-                <x-maz-sidebar-item title="Permission" link="{{ route('permission.index') }}" icon="bi bi-shield-fill-check"
-                                    active="{{ Route::is(['permission.*']) }}"/>
-                <x-maz-sidebar-item title="Role" link="{{ route('role.index') }}" icon="bi bi-shield-fill-check"
-                                    active="{{ Route::is(['role.*']) }}"/>
-                <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}" icon="bi bi-megaphone-fill"
-                                    active="{{ Route::is(['article.*']) }}"/>
-                <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}" icon="bi bi-clipboard-data-fill"
-                                    active="{{ Route::is(['report.*']) }}"/>
+                    <x-maz-sidebar-item title="User" link="{{ route('user.index') }}" icon="bi bi-person-fill"
+                                        active="{{ Route::is(['user.*']) }}"/>
+                    <x-maz-sidebar-item title="Permission" link="{{ route('permission.index') }}"
+                                        icon="bi bi-shield-fill-check"
+                                        active="{{ Route::is(['permission.*']) }}"/>
+                    <x-maz-sidebar-item title="Role" link="{{ route('role.index') }}" icon="bi bi-shield-fill-check"
+                                        active="{{ Route::is(['role.*']) }}"/>
+                    <x-maz-sidebar-item title="Pengumuman" link="{{ route('article.index') }}"
+                                        icon="bi bi-megaphone-fill"
+                                        active="{{ Route::is(['article.*']) }}"/>
+                    <x-maz-sidebar-item title="Laporan" link="{{ route('report.index') }}"
+                                        icon="bi bi-clipboard-data-fill"
+                                        active="{{ Route::is(['report.*']) }}"/>
                 @endcan
             </ul>
         </div>

@@ -30,7 +30,8 @@
                             </div>
                         @endif
 
-                        <div class="form-group my-2 d-flex justify-content-end">
+                        <div class="form-group my-2 d-flex justify-content-end align-items-center">
+                            <x-action-message class="me-3" on="profile-updated"></x-action-message>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>

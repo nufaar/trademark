@@ -40,8 +40,10 @@ new class extends Component {
                 <input wire:model.live.debounce300ms="search" type="text" class="form-control"
                        placeholder="Cari...">
             </div>
-            <a href="{{ route('permission.create') }}" class="btn btn-primary icon icon-left"><i
-                    class="bi bi-person-add"></i> Tambah Permission</a>
+            @can('create permission')
+                <a href="{{ route('permission.create') }}" class="btn btn-primary icon icon-left"><i
+                        class="bi bi-person-add"></i> Tambah Permission</a>
+            @endcan
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
@@ -57,10 +59,15 @@ new class extends Component {
                         <td>{{ $permission->name }}</td>
                         <td>
                             <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
-                                   class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
-                                <button wire:click="destroy({{ $permission->id }})" class="btn icon btn-sm btn-primary">
-                                    <i class="bi bi-x-lg"></i></button>
+                                @can('edit permission')
+                                    <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
+                                       class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
+                                @endcan
+                                @can('delete permission')
+                                    <button wire:click="destroy({{ $permission->id }})"
+                                            class="btn icon btn-sm btn-primary">
+                                        <i class="bi bi-x-lg"></i></button>
+                                @endcan
                             </div>
                         </td>
 

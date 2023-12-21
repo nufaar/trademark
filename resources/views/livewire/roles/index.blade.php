@@ -39,8 +39,10 @@ new class extends Component {
                 <input wire:model.live.debounce300ms="search" type="text" class="form-control"
                        placeholder="Cari...">
             </div>
-            <a href="{{ route('role.create') }}" class="btn btn-primary icon icon-left"><i
-                    class="bi bi-person-add"></i> Tambah Peran</a>
+            @can('create role')
+                <a href="{{ route('role.create') }}" class="btn btn-primary icon icon-left"><i
+                        class="bi bi-person-add"></i> Tambah Peran</a>
+            @endcan
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
@@ -56,10 +58,14 @@ new class extends Component {
                         <td>{{ $role->name }}</td>
                         <td>
                             <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                <a href="{{ route('role.edit', ['role' => $role->id]) }}"
-                                   class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
-                                <button wire:click="destroy({{ $role->id }})" class="btn icon btn-sm btn-primary">
-                                    <i class="bi bi-x-lg"></i></button>
+                                @can('edit role')
+                                    <a href="{{ route('role.edit', ['role' => $role->id]) }}"
+                                       class="btn icon btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
+                                @endcan
+                                @can('delete role')
+                                    <button wire:click="destroy({{ $role->id }})" class="btn icon btn-sm btn-primary">
+                                        <i class="bi bi-x-lg"></i></button>
+                                @endcan
                             </div>
                         </td>
 
