@@ -105,6 +105,7 @@ class extends Component {
             'logo' => $this->logo ? $this->logo->hashName() : $this->oldLogo,
             'certificate' => $this->certificate ? $this->certificate->hashName() : $this->oldCertificate,
             'signature' => $this->signature ? $this->signature->hashName() : $this->oldSignature,
+            'status' => 'pending'
         ]);
 
         session()->flash('success', 'Permohonan berhasil diubah.');
