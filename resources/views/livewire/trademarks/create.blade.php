@@ -105,13 +105,13 @@ class extends Component {
                     @if($trademarks)
                         <div class="mb-2 text-sm col-6">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-danger">Merek sudah digunakan!</li>
+                                <li class="list-group-item list-group-item-warning">Merek yang sudah didaftar</li>
                                 @foreach($trademarks as $trademark)
                                     <li class="list-group-item">
                                     <div class=" mb-2">
                                         <div class="font-bold">{{ $trademark['name'] }}</div>
                                         <span
-                                            class="d-block">{{ $trademark['score'] . '% kesamaan' }}</span>
+                                            class="d-block">{{ round($trademark['score'], 2) . '% kesamaan' }}</span>
                                     </div>
                                     </li>
                                 @endforeach

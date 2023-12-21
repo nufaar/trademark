@@ -419,7 +419,7 @@ class extends Component {
                     let count = Object.values(dataTrademarkStatus[0]);
 
                     const statusMapping = {
-                        "approved": "Disetujui",
+                        "approved": "Diterima",
                         "revision": "Revisi",
                         "rejected": "Ditolak",
                         "pending": "Diajukan"
