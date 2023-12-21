@@ -191,7 +191,7 @@ class extends Component {
                             </td>
                             <td>
                                 <div
-                                    class="badge rou nded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ config('constants.status.text.' . $trademark->status) }}</div>
+                                    class="badge rounded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ config('constants.status.text.' . $trademark->status) }}</div>
                             </td>
                             @can('verify trademark')
                                 <td>

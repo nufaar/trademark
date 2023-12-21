@@ -11,6 +11,7 @@ class extends Component {
     // default year now
     public $year = null;
     public $chart = 1;
+    public $trademarks;
 
 
     public function updatedChart($value)
@@ -24,6 +25,11 @@ class extends Component {
     public function mount()
     {
         $this->year = date('Y');
+        $this->trademarks = Trademark::query()
+            ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                return $query->where('user_id', auth()->user()->id);
+            })
+            ->get();
 
         $this->dispatch('dataLogin', $this->getLoginLog($this->year));
         $this->dispatch('dataPermohonan', $this->getTrademarksCount($this->year));
@@ -34,13 +40,37 @@ class extends Component {
     {
         return [
             // login dalam satu hari, bulan, tahun
-            'loginYear' => LoginLog::whereYear('created_at', date('Y'))->get()->count(),
-            'loginMonth' => LoginLog::whereMonth('created_at', date('m'))->get()->count(),
-            'loginDay' => LoginLog::whereDay('created_at', date('d'))->get()->count(),
+            'loginYear' => LoginLog::whereYear('created_at', date('Y'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
+            'loginMonth' => LoginLog::whereMonth('created_at', date('m'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
+            'loginDay' => LoginLog::whereDay('created_at', date('d'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
             // permohonan dalam satu hari, bulan, tahun
-            'permohonanYear' => Trademark::whereYear('created_at', date('Y'))->get()->count(),
-            'permohonanMonth' => Trademark::whereMonth('created_at', date('m'))->get()->count(),
-            'permohonanDay' => Trademark::whereDay('created_at', date('d'))->get()->count(),
+            'permohonanYear' => Trademark::whereYear('created_at', date('Y'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
+            'permohonanMonth' => Trademark::whereMonth('created_at', date('m'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
+            'permohonanDay' => Trademark::whereDay('created_at', date('d'))
+                ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })
+                ->get()->count(),
         ];
     }
 
@@ -69,7 +99,11 @@ class extends Component {
 
     public function getTrademarksCount($year)
     {
-        $permohonanLogs = Trademark::whereYear('created_at', $year)->get();
+        $permohonanLogs = Trademark::whereYear('created_at', $year)
+            ->when(auth()->user()->hasRole('pemohon'), function ($query) {
+                return $query->where('user_id', auth()->user()->id);
+            })
+            ->get();
 
         return $this->getDataYearly($permohonanLogs);
     }
@@ -95,7 +129,14 @@ class extends Component {
 
     public function countTrademarkStatus()
     {
-        $trademarks = Trademark::all();
+//        $trademarks = Trademark::all();
+        // check if auth  ser has role name 'pemohon' filter
+        if (auth()->user()->hasRole('pemohon')) {
+            $trademarks = Trademark::where('user_id', auth()->user()->id)->get();
+        } else {
+            $trademarks = Trademark::all();
+        }
+
         $status = $trademarks->groupBy('status')->map(function ($item) {
             return $item->count();
         })->toArray();
@@ -183,7 +224,7 @@ class extends Component {
                     <div class="card">
                         <div class="card-body p-3" wire:ignore>
                             <div class="d-flex justify-content-between">
-                                <h5>Permohonan</h5>
+                                <h5>Permohonan dalam setahun</h5>
                                 <div>
                                     <select class="form-select" wire:model.live.debounce="chart">
                                         <option value="2023">2023</option>
@@ -286,6 +327,34 @@ class extends Component {
             </div>
         </section>
     @endcan
+
+    <section class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <h5>Daftar Permohonan</h5>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Nama Merek</th>
+                            <th>Tanggal Diajukan</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($trademarks as $trademark)
+                            <tr>
+                                <td>{{ $trademark->name }}</td>
+                                <td>{{ $trademark->created_at->format('d M Y') }}</td>
+                                <td><span class="badge rounded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ config('constants.status.text.' . $trademark->status) }}</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
     @push('script')
         <script>
