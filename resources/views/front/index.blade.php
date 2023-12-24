@@ -20,7 +20,7 @@
                     <li><a wire:navigate href="{{ route('front.trademark') }}" class="@if(Route::is('front.trademark')) font-semibold @endif">Rekap Permohonan</a></li>
                 </ul>
             </div>
-            <a wire:navigate href="{{ route('front.index') }}" class="btn btn-ghost text-xl">SiMerek</a>
+            <a wire:navigate href="{{ route('front.index') }}" class="btn btn-ghost text-xl">{{ env('APP_NAME', 'Trademark') }}</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">

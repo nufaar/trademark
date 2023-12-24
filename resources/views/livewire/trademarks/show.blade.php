@@ -32,7 +32,7 @@ class extends Component {
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center flex-column">
                         <div class="avatar avatar-2xl">
-                            <img src="{{ asset('storage/logos/' . $trademark->logo) }}" alt="Avatar">
+                            <img class="object-fit-cover" src="{{ asset('storage/logos/' . $trademark->logo) }}" alt="Avatar">
                         </div>
 
                         <h3 class="mt-3">{{ $trademark->name }}</h3>

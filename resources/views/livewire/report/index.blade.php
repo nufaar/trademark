@@ -14,6 +14,8 @@ class extends Component {
     public $search = '';
     public $perPage = 5;
     public $status = '';
+    public $startDate = '';
+    public $endDate = '';
 
     public function searchScope($query, $keyword, $columns)
     {
@@ -36,6 +38,12 @@ class extends Component {
                 ->when($this->status, function ($query) {
                     return $query->where('status', $this->status);
                 })
+                ->when($this->startDate, function ($query) {
+                    return $query->whereDate('created_at', '>=', $this->startDate);
+                })
+                ->when($this->endDate, function ($query) {
+                    return $query->whereDate('created_at', '<=', $this->endDate);
+                })
                 ->paginate($this->perPage),
         ];
     }
@@ -43,7 +51,7 @@ class extends Component {
     public function export()
     {
         $date = date('Y-m-d');
-        return Excel::download(new TrademarksExport($this->search, $this->perPage, $this->status), 'laporan-permohonan-' . $date . '.xlsx');
+        return Excel::download(new TrademarksExport($this->search, $this->perPage, $this->status, $this->startDate, $this->endDate), 'laporan-permohonan-' . $date . '.xlsx');
     }
 
 }; ?>
@@ -60,7 +68,7 @@ class extends Component {
     <div class="card">
         <div class="card-header">
             <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
-                <div class="d-flex flex-column flex-sm-row gap-3">
+                <div class="d-flex flex-column flex-sm-row gap-1">
                     <div>
                         <input wire:model.live.debounce300ms="search" type="text" class="form-control"
                                placeholder="Cari...">
@@ -74,9 +82,16 @@ class extends Component {
                             <option value="pending">Menunggu</option>
                         </select>
                     </div>
+
+                    <div>
+                        <input wire:model.live.debounce="startDate" type="date" class="form-control" max="{{ $endDate }}">
+                    </div>
+                    <div>
+                        <input wire:model.live.debounce="endDate" type="date" class="form-control" min="{{ $startDate }}" max="{{ now()->format('Y-m-d') }}">
+                    </div>
                 </div>
 
-                <div class="d-flex w-100 justify-content-end">
+                <div class="d-flex justify-content-end">
                     @can('export report')
                         <button wire:click="export" class="btn btn-primary">Export</button>
                     @endcan
@@ -90,6 +105,7 @@ class extends Component {
                     <th>Merek</th>
                     <th>Pemilik</th>
                     <th>Alamat</th>
+                    <th>Tanggal</th>
                     <th>Status</th>
                 </tr>
                 </thead>
@@ -99,6 +115,7 @@ class extends Component {
                         <td>{{ $trademark->name }}</td>
                         <td>{{ $trademark->owner }}</td>
                         <td>{{ $trademark->address }}</td>
+                        <td>{{ $trademark->created_at->format('d M Y') }}</td>
                         <td>
                             <div
                                 class="badge rou nded-pill bg-light-{{ config('constants.status.color.' . $trademark->status) }}">{{ config('constants.status.text.' . $trademark->status) }}</div>

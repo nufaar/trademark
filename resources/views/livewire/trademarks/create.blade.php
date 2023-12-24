@@ -23,11 +23,20 @@ class extends Component {
     public $certificate;
     #[Validate('required|image|max:2048')]
     public $signature;
+    #[Validate('required|integer')]
+    public $kelas;
 
     public $trademarks = [];
 
     public $maxScore;
 
+
+    public function with()
+    {
+        return [
+            'class' => range(1,45),
+        ];
+    }
 
     public function updatedName()
     {
@@ -41,6 +50,8 @@ class extends Component {
 
         $trademarks = array_slice($data->json()['hits']['hits'], 0, 3);
         $this->trademarks = getSimilarity($trademarks, $this->name);
+
+//        dd($this->trademarks);
 
 
         if (empty($this->trademarks)) {
@@ -66,6 +77,7 @@ class extends Component {
             'logo' => $this->logo->hashName(),
             'certificate' => $this->certificate->hashName() ?? '',
             'signature' => $this->signature->hashName(),
+            'class' => $this->kelas ?? 1,
         ]);
 
         session()->flash('success', 'Data berhasil ditambahkan.');
@@ -89,10 +101,11 @@ class extends Component {
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-            @if($maxScore > 99)
-                <div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i>
-                    Merek sudah digunakan!</div>
-            @endif
+                @if($maxScore > 99)
+                    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i>
+                        Merek sudah digunakan!
+                    </div>
+                @endif
                 <form wire:submit="store">
 
                     <div class="form-group my-2">
@@ -108,16 +121,33 @@ class extends Component {
                                 <li class="list-group-item list-group-item-warning">Merek yang sudah didaftar</li>
                                 @foreach($trademarks as $trademark)
                                     <li class="list-group-item">
-                                    <div class=" mb-2">
-                                        <div class="font-bold">{{ $trademark['name'] }}</div>
-                                        <span
-                                            class="d-block">{{ round($trademark['score'], 2) . '% kesamaan' }}</span>
-                                    </div>
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <div>
+                                                <div class="font-bold">{{ $trademark['name'] }}</div>
+                                                <span
+                                                    class="d-block">{{ round($trademark['score'], 2) . '% kesamaan' }}</span>
+                                                <span
+                                                    class="d-block">Kelas: {{ $trademark['kelas'] }}</span>
+                                            </div>
+                                            <div>
+                                                <div
+                                                    class="badge rou nded-pill bg-light-{{ config('constants.trademark.status.color.' . $trademark['status']) }}">{{ $trademark['status'] }}</div>
+                                            </div>
+                                        </div>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
+
+                    <div class="form-group my-2">
+                        <label for="role" class="form-label">Kelas</label>
+                        <select wire:model="kelas" class="form-select" id="role">
+                            @foreach($class as $c)
+                                <option value="{{ $c }}">{{ $c }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
 
                     <div class="form-group my-2">

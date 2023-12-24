@@ -30,7 +30,9 @@ if (! function_exists('getSimilarity')) {
         foreach ($trademarks as $trademark) {
             $result[] = [
                 'name' => $trademark['_source']['nama_merek'],
-                'score' => $comparison->smg(Str::lower($name), Str::lower($trademark['_source']['nama_merek'])) * 100
+                'score' => $comparison->smg(Str::lower($name), Str::lower($trademark['_source']['nama_merek'])) * 100,
+                'kelas' => $trademark['_source']['t_class'][0]['class_no'],
+                'status' => $trademark['_source']['status_group']['status_group'],
             ];
         }
         return $result;

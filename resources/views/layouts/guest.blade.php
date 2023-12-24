@@ -22,7 +22,7 @@
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div style="font-size: 72px" class="mb-10">
-                        <h1><a class="" href="/" wire:navigate>SiMerek</a></h1>
+                        <h1><a class="" href="/" wire:navigate>{{ env('APP_NAME', 'Trademark') }}</a></h1>
                     </div>
                     {{ $slot }}
                 </div>

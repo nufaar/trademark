@@ -19,6 +19,7 @@ class extends Component {
     public $logo;
     public $certificate;
     public $signature;
+    public $kelas;
 
 //    old image
     public $oldLogo;
@@ -30,6 +31,13 @@ class extends Component {
 
     public $maxScore;
 
+    public function with()
+    {
+       return [
+           'class' => range(1,45),
+       ];
+    }
+
     public function mount(Trademark $trademark)
     {
         $this->trademark = $trademark;
@@ -39,6 +47,7 @@ class extends Component {
         $this->oldLogo = $trademark->logo;
         $this->oldCertificate = $trademark->certificate;
         $this->oldSignature = $trademark->signature;
+        $this->kelas = $trademark->class ?? 1;
     }
     // rules
     public function rules()
@@ -50,6 +59,7 @@ class extends Component {
             'logo' => 'nullable|image|max:2048',
             'certificate' => 'nullable|max:5120|file|mimes:pdf,jpg,jpeg,png',
             'signature' => 'nullable|image|max:2048',
+            'kelas' => 'required|integer'
         ];
     }
 
@@ -105,7 +115,8 @@ class extends Component {
             'logo' => $this->logo ? $this->logo->hashName() : $this->oldLogo,
             'certificate' => $this->certificate ? $this->certificate->hashName() : $this->oldCertificate,
             'signature' => $this->signature ? $this->signature->hashName() : $this->oldSignature,
-            'status' => 'pending'
+            'status' => 'pending',
+            'class' => $this->kelas
         ]);
 
         session()->flash('success', 'Permohonan berhasil diubah.');
@@ -161,6 +172,15 @@ class extends Component {
                             </ul>
                         </div>
                     @endif
+
+                    <div class="form-group my-2">
+                        <label for="role" class="form-label">Kelas</label>
+                        <select wire:model="kelas" class="form-select" id="role">
+                            @foreach($class as $c)
+                                <option value="{{ $c }}">{{ $c }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-group my-2">
                         <label for="address" class="form-label">Alamat</label>

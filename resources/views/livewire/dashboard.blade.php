@@ -377,7 +377,7 @@ class extends Component {
                         plotOptions: {},
                         series: [
                             {
-                                name: "Akses",
+                                name: "Permohonan",
                                 data: dataPermohonan[0]
                             },
                         ],

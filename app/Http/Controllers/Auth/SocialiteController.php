@@ -48,7 +48,7 @@ class SocialiteController extends Controller
             // Jika belum ada
         } else {
 
-            // User berdasarkan email 
+            // User berdasarkan email
             $user = User::where('email', $socialUser->getEmail())->first();
 
             // Jika Tidak ada user
@@ -58,6 +58,7 @@ class SocialiteController extends Controller
                     'name'  => $socialUser->getName(),
                     'email' => $socialUser->getEmail()
                 ]);
+                $user->assignRole('pemohon');
                 $user->markEmailAsVerified();
             }
 
